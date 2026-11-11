@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*.pt
+*.safetensors
+.venv/
+.kaggle/
+.env
+11/11/vendor/
+11/11/external/
+11/11/base_staged/
+11/11/runs*/
+11/11/submission/
+11/11/data/*.parquet
+11/11/data/*.report.json

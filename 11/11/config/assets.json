@@ -1,0 +1,103 @@
+{
+  "name": "11/11",
+  "seed": 42,
+  "original_data": {
+    "train.csv": {
+      "sha256": "40a22ce8d88c5f46feb4637a099db815bef5f713ffe53e89dbe1b7b21de77707",
+      "bytes": 2139418
+    },
+    "test.csv": {
+      "sha256": "4545aa3a3459f4c0724f97ad5bd06c4caa3506bdfea5fab905e8203184fc0c57",
+      "bytes": 2218
+    },
+    "sample_submission.parquet": {
+      "sha256": "ccf86796b80fd7f83d8463664603fd1208e17559abcf416f198776b819646188",
+      "bytes": 899
+    }
+  },
+  "folds_sha256": "d6921261b37b0f8af03d0683aec7b4b37ba74b139fc8cbc183771f511879220a",
+  "augmentation": {
+    "filename": "stream_8b_cap9500.parquet",
+    "sha256": "8a456ad6ce571bad412c178527210173ea727b6fe4584c7971be6955bdcc41bd",
+    "bytes": 76860698,
+    "rows": 153770,
+    "release_tag": "11/11",
+    "source": "crtproduction/name-that-llm-open-pool",
+    "source_rows": 212623,
+    "cap": 9500,
+    "selection_seed": 20261110,
+    "raw_pool_sha256": "1e4200aed80f52d655d4900a301cb427ca1341e06be31a8b7d5fde9ea3ef425f",
+    "raw_pool_bytes": 105708387
+  },
+  "native_assets": {
+    "dataset": "lightningv08/ntl-olmo2-native24-final-inference-assets",
+    "subdirectory": "ntl-native-q8-multidepth-fivefold-0679",
+    "manifest_sha256": "051f8a1049366c806405324aba219102925e19cb339dd4822f6180cc32a93853",
+    "files": {
+      "tokens.npz": "c2a6d7611ec09c1e62f96d00bde99b3c53a3103244ec48f9e26b0c3e737ce6a1",
+      "oof_reference.npz": "e76067d20c23f5661ee99098049304b63a718c51068977670eb461e1e245d872",
+      "study.json": "71e28b48c65c92c7c60629b432e11f73edbeae65369847747d92fc7edee4e490",
+      "calibration/fold3.json": "d047be51506197eef5fb8b1e1b4cdc37db34584b7ffa51dee81e4cdec9f30a13",
+      "calibration/fold2.json": "67edd736b11eb7301bda549b79c71fa3bbac21c50a29c3da09a3e469babf989c",
+      "calibration/fold4.json": "6a6295d0a7e17b6e02d734f03b651c06f3eebf15c01a014d17a72f4e16a65e13",
+      "calibration/fold0.json": "6413e7e2e9d726a928fc04c412672515d5672c391bb1124bea893a82254d74a0",
+      "calibration/fold1.json": "2a52de3b2c7ad39974d502ffc3b6105a02c773a5661f83f7ef2283669355e57a",
+      "fold0/trainables.safetensors": "cf6c8061e67edc20a88d0b0f3021fc0354cbd713ed0adc40df8b7daf2915592c",
+      "fold0/split.json": "17a82e2c8b8288361a7d3845b10b9198c80885b53f7739bb696e4d9c985bb3d7",
+      "fold0/source_complete.json": "30035840916302abca33749dde89f67922b038daed1a0c8f4a2df6a60db231cc",
+      "fold0/numeric_probes.npz": "43f8c61dda823a21f7605b2f626d1d37d84064d03669263be12e16395180d249",
+      "fold4/numeric_probes.npz": "bf78b65fead8308f6e5d96c53d904855ecfd808aeaffc3cbd08ae6dd3bb833f5",
+      "fold4/source_complete.json": "c7f8ef2bc2877fb9b4e6e4b525b23f85d732a0cc1c027fca28e142f7b0858583",
+      "fold4/trainables.safetensors": "fdb0ec60a1de09eef0e1840176ce290bfaafa0e71adaddd10c4a31f24d130016",
+      "fold4/split.json": "915367ca108bc742e31badb524fae7caec58c735e17cd574def3d73201d936a4",
+      "fold3/numeric_probes.npz": "b0025d59d6d9868f5df2ff50ca6c23257852f45a94ac36a55754812c8ee5c339",
+      "fold3/split.json": "04255acaf16cf3e5494e3438bf8a6d67a715676e28d96499f7a3fc57a2e03fbe",
+      "fold3/trainables.safetensors": "4c69c0d2372d45b953e56eb7194a7f8e7ceb8d3feea5bc0f85b2dad1f501822b",
+      "fold3/source_complete.json": "103e3b5b905781d6ca8b8ff22a3b1f1b85c56e306b745f955def51f6eebc74e6",
+      "fold1/numeric_probes.npz": "a7d42392e82289313ff20523e0210a521de5a77a1a3fc0d183ce1308acd387f3",
+      "fold1/split.json": "f8cdc8ccd7be7557e64ce20de427a1afce39d232982ab3d3d57a6f34fa139e46",
+      "fold1/trainables.safetensors": "ed8853f1e113d0b8dd1e991b2f2242a696b94e9d842fe65417dbf0a9802603ab",
+      "fold1/source_complete.json": "1182ddef69de411180d477bc096bba4b1b6992005e0199dd7626705de2cb6ce7",
+      "base/config.json": "dcccf7c7890c8debc4af8dace8d6acd8dd50bd56d50d4d8b60529381ba3de3d7",
+      "base/modules.json": "84e40c8e006c9b1d6c122e02cba9b02458120b5fb0c87b746c41e0207cf642cf",
+      "base/vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+      "base/merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+      "base/model.safetensors.index.json": "ceaf1429bfa18eecc75d079737e8d1fe8dc0627f5ec7e6a985514626d1ac6a77",
+      "base/download_complete.json": "b0551ab6f34729d2d83e0d36bc4f4370a001ca353089a2c060401a68090836af",
+      "base/tokenizer.json": "83cdf8c3a34f68862319cb1810ee7b1e2c0a44e0864ae930194ddb76bb7feb8d",
+      "base/tokenizer_config.json": "2f58f4bbd7bbce15d683f525954ef3a92cd82f5e06415a9c513859bf8ab72436",
+      "base/README.md": "1fd6f3583d642a3319efb3eb8c22b6aa6320e6ab92263447bd84fd92615206d4",
+      "base/config_sentence_transformers.json": "10667c72ddb772627bf1780cb7f86af8e2ae0032b8c243c731172064105c6961",
+      "base/generation_config.json": "28396d421a2108acce96383f6a7de78008f7f1b17f807958f3c14c51dbfb65fb",
+      "fold2/numeric_probes.npz": "14ee47d3acbfc680a2381c41926e2903e3e6aa366700dac24fdf2d4853eae3c0",
+      "fold2/split.json": "37762471430b6774812b3f50b3d7a138ed5be6505487607f21e9d4268d7bfe1a",
+      "fold2/source_complete.json": "e6293fb5f6505132babe4053da51109bead0831021e9d32d22286c2cd1cf6e9e",
+      "fold2/trainables.safetensors": "b2175fe6576a9d70d48ddd0c9c0a5b68eb5ce903a96937c08d59a0567ca2d455",
+      "base/1_Pooling/config.json": "2e1da26b3fd65cf7e370d2fabf28a8c59efa7edb525d1b8b50be8e5ca1048ea6"
+    }
+  },
+  "model": {
+    "repo": "Qwen/Qwen3-Embedding-8B",
+    "revision": "1d8ad4ca9b3dd8059ad90a75d4983776a23d44af",
+    "kaggle": "qwen-lm/qwen-3-embedding/Transformers/8b/1"
+  },
+  "public_notebook": {
+    "kernel": "lbjyang/ntl-684-ozertuu-mirror",
+    "sha256": "340d29bb90e4dc60a9f8bba1bc79bdc69b0faa1bf65d04e367e78a1ed264297f",
+    "native_code_sha256": "5d5b712d601712d3834d7775194b0aafe70bc782f35027c41f74790528e6da92"
+  },
+  "reference_data": {
+    "q14v5.npz": {
+      "sha256": "c118e0a43c5946d4ed3d8d0ff05b13c9797e6a17fb74c778278dd028fc741cb9",
+      "bytes": 866302
+    },
+    "q8v5.npz": {
+      "sha256": "0dadccc065a6eb67d4c97e35f13d88e6fefe69e3a886bb2961b58f638c9d6fdb",
+      "bytes": 868036
+    },
+    "ll8v5.npz": {
+      "sha256": "83c92793795032a75171c1b6dfa2d1ff8217f81eacf82b447acebb2255053041",
+      "bytes": 866493
+    }
+  }
+}

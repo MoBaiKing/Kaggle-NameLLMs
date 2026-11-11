@@ -1,0 +1,61 @@
+source_dataset,source_license,passages,models
+drjcfmd/ntl-generated-v2,CC-BY-SA-4.0,20400,17
+harshitkmr/ntl-google-gen-v1,Attribution 4.0 International (CC BY 4.0),17798,3
+trnhip/ntl-api-gen,Attribution 4.0 International (CC BY 4.0),16818,9
+abdullah1afify/ntl-generations,Attribution 4.0 International (CC BY 4.0),14314,15
+kilupy/ntl-claude-family-passages,CC BY 4.0 (stated in the dataset README; Kaggle licence field unset),14148,5
+elliotthankinson/ntl-exact-gens-v3,Attribution 4.0 International (CC BY 4.0),13359,10
+arxitekton/ntl-claude-gen-v1,Attribution 4.0 International (CC BY 4.0),12463,16
+willrice/name-that-llm-openrouter-harvest,Attribution 4.0 International (CC BY 4.0),12083,12
+vbandaru/ntl-extra-passages-w05,Attribution 4.0 International (CC BY 4.0),4359,13
+lxdlxdlxd/ntl-synth-generations-v1,Attribution 4.0 International (CC BY 4.0),4348,13
+aswathvanan/ntl-proxy-passages,CC-BY-SA-4.0,4254,12
+davidpiln/ntl-vertex-gemini-gen,Attribution 4.0 International (CC BY 4.0),4187,2
+abhinavsaipodugu/ntl-proxy-gpt-gemini-passages,Attribution 4.0 International (CC BY 4.0),3914,8
+alessandrolair/ntl-kaggle-benchmarks-generated-passages,Attribution 4.0 International (CC BY 4.0),3701,12
+lucasboesen/ntl-free-proxy-generations,Attribution 4.0 International (CC BY 4.0),3674,8
+alperen5252525/ntl-vertex-gemini-proxy-gpt-generations,Attribution 4.0 International (CC BY 4.0),3573,9
+kilupy/ntl-18-model-corpus,CC BY 4.0 (stated in the dataset README; Kaggle licence field unset),3359,12
+arxitekton/ntl-claude-gen-v2,Attribution 4.0 International (CC BY 4.0),3313,14
+pardheev/ntl-proxy-extra-passages,Attribution 4.0 International (CC BY 4.0),2819,9
+michaelsemenoff/ntl-pool-v3,Attribution 4.0 International (CC BY 4.0),2800,12
+dedruck/ntl-proxy-gen,Attribution 4.0 International (CC BY 4.0),2560,11
+michaelsemenoff/ntl-own-extra-v1,Attribution 4.0 International (CC BY 4.0),2532,16
+darragh1walsh/ntl-kaggle-ai-gen-run-1,CC0-1.0,2431,12
+seyitkaangunes/ntl-extra-api-passages,Attribution 4.0 International (CC BY 4.0),2314,5
+kenandemirci/ntl-glm-gemini-generations,Attribution 4.0 International (CC BY 4.0),2279,5
+yutoab/ntl-free-proxy-thin-labels,Attribution 4.0 International (CC BY 4.0),2119,5
+mathleteutd/ntl-12-model-proxy-passages,Attribution 4.0 International (CC BY 4.0),2063,12
+vidhikishorwaghela/ntl-own-proxy-generations,Attribution 4.0 International (CC BY 4.0),2018,12
+zeminglii/ntl-own-exact-route-generations,Attribution 4.0 International (CC BY 4.0),2000,17
+zbigniewkirchner/ntl-extra-gpt-passages,Attribution 4.0 International (CC BY 4.0),1949,7
+philipvallen/ntl-pools,Attribution 4.0 International (CC BY 4.0),1628,10
+tadeuhayashida/ntl-claude-fable-5-generations,Attribution 4.0 International (CC BY 4.0),1609,1
+danielandresmiranda/ntl-openrouter-glm-kimi,Attribution 4.0 International (CC BY 4.0),1482,3
+bingli283/ntl-gen-pilot-v1,Attribution 4.0 International (CC BY 4.0),1477,7
+trnhip/ntl-proxy-gen,Attribution 4.0 International (CC BY 4.0),1456,11
+chosunghwan/ntl-gemini-new-prompts,Attribution 4.0 International (CC BY 4.0),1440,3
+illiadolenko/ntl-generated-corpus-v1,CC0-1.0,1166,13
+zitaoxu2002/ntl-proxy-passages-pre-ruling,Attribution 4.0 International (CC BY 4.0),1026,12
+carlosoponce/ntl-own-proxy-passages,Attribution 4.0 International (CC BY 4.0),973,3
+ziyuzhou1207/ntl-zz-proxy-generations,Attribution 4.0 International (CC BY 4.0),972,8
+dophuchung/ntl-proxy-generations,Attribution 4.0 International (CC BY 4.0),963,7
+haileycheng/name-that-llm-same-prompt-passages,Attribution 4.0 International (CC BY 4.0),899,12
+kaplinskiy/ntl-gpt-proxy-passages,Attribution 4.0 International (CC BY 4.0),887,5
+jadkutbi/ntl-own-proxy-generations,Attribution 4.0 International (CC BY 4.0),874,8
+parkjinsu1/ntl-kb-proxy-panels,CC-BY-SA-4.0,820,12
+simonrba/ntl-pool-extra,CC-BY-SA-4.0,737,8
+asiralabi/ntl-src,CC-BY-SA-4.0,715,12
+nuridudak/ntl-130k-clean-passages,CC-BY-SA-4.0,714,16
+prvsiyan/ntl-own-prompt-generations-v1,CC-BY-SA-4.0,703,12
+earthmaker/ntl-own-prompt-generations,Attribution 4.0 International (CC BY 4.0),698,17
+alperen5252525/ntl-public-passage-pool-v1,CC-BY-SA-4.0,594,8
+adurey/ntl-proxy-gen-20261031,Attribution 4.0 International (CC BY 4.0),590,11
+rainycloudss/ntl-free-proxy-fresh-prompts,Attribution 4.0 International (CC BY 4.0),513,12
+keshavatearth/ntl-gpt-new-prompts-v1,Attribution 4.0 International (CC BY 4.0),496,5
+aniruduh9/ntl-hard-supplement,Attribution 4.0 International (CC BY 4.0),495,8
+hansamaqht/name-that-llm-glm-extra,CC0-1.0,434,2
+prvsiyan/prvsiyans-extended-name-that-llm-dataset,Attribution 4.0 International (CC BY 4.0),266,1
+mrralphie/ntl-pool-b2m,CC-BY-SA-4.0,30,3
+dominicjamil/ntl-pools,CC0-1.0,10,7
+swaroopmeher/ntl-public-data-sub1020,CC-BY-SA-4.0,7,7
