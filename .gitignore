@@ -12,3 +12,7 @@ __pycache__/
 11/11/submission/
 11/11/data/*.parquet
 11/11/data/*.report.json
+11/12/cache/
+11/12/runs*/
+11/12/ablation_*/
+11/12/submission/
