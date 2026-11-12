@@ -30,9 +30,9 @@ def run(command, check=True, timeout=5400):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--directory', type=Path, default=ROOT / 'submission')
+    p.add_argument('--directory', type=Path, default=ROOT / 'submission_grpo')
     p.add_argument('--submit', action='store_true', help='Commit and submit exactly once after checks')
-    p.add_argument('--message', default='11/12: fixed seed 42, native embedding fold states')
+    p.add_argument('--message', default='11/12 GRPO: public native continuation, seed42, four-GPU training')
     a = p.parse_args()
     directory = a.directory.resolve()
     receipt = directory / 'receipt.json'
@@ -55,6 +55,12 @@ def main():
                               next_command='python scripts/publish.py --submit')), flush=True)
         return
     upload = directory / 'upload'
+    spec_path = upload / 'dyl_11_12_native.json'
+    if not spec_path.is_file():
+        raise ValueError('Missing GRPO state package; build the optimized Notebook first')
+    spec = json.loads(spec_path.read_text())
+    if spec.get('method') != 'public_native_grpo' or not spec.get('optimized_folds'):
+        raise ValueError('The upload must contain public-native GRPO fold states')
     if upload.exists():
         ds = json.loads((upload / 'dataset-metadata.json').read_text())['id']
         code, text = run(['kaggle', 'datasets', 'create', '-p', str(upload), '-r', 'skip'], check=False)
@@ -88,7 +94,7 @@ def main():
     outputs = directory / 'commit_output'; outputs.mkdir(exist_ok=True)
     run(['kaggle', 'kernels', 'output', kernel, '-p', str(outputs)], timeout=1800)
     logs = '\n'.join(f.read_text(errors='replace') for f in outputs.rglob('*.log'))
-    if upload.exists() and 'DYL_11_12_NATIVE_MIX OK' not in logs:
+    if 'DYL_11_12_NATIVE_MIX OK' not in logs or 'DYL_GRPO_FOLDS_LOADED' not in logs:
         raise RuntimeError('Native slot setup was not confirmed; no submission sent')
     submission = outputs / 'submission.parquet'
     if not submission.is_file():

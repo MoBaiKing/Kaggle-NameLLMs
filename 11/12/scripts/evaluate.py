@@ -87,10 +87,17 @@ if a.smoke:
     rec['smoke_ok'] = bool(pub_agree >= 0.98 and np.isfinite(P[0]).all())
     json.dump(rec, open(run / ('smoke_ok.json' if rec['smoke_ok'] else 'smoke_failed.json'), 'w'), indent=1)
     sys.exit(0 if rec['smoke_ok'] else 1)
-cal = C.fit_calibration(P[0][ii], Cn[0][ii], B[0], y[inner], C.pid[inner])
+if done.get('calibration_mode') == 'frozen_public':
+    cal = done['policy_calibration']
+    if cal != C.public_state(k):
+        raise ValueError('GRPO must retain the pinned public calibration')
+    calibration_source = 'Pinned public inner-only calibration, frozen before GRPO'
+else:
+    cal = C.fit_calibration(P[0][ii], Cn[0][ii], B[0], y[inner], C.pid[inner])
+    calibration_source = '11/12 inner calibration rows (held out of both training stages)'
 rec['calibration'] = {kk: v for kk, v in cal.items() if kk != 'grid'}
 (run / 'calibration').mkdir(exist_ok=True)
-json.dump({'models': {'qwen8': cal}, 'source': '11/12 inner calibration rows (training fold, held out of both training stages)'},
+json.dump({'models': {'qwen8': cal}, 'source': calibration_source},
           open(run / 'calibration/fold.json', 'w'), indent=1)
 np.savez(run / 'native_eval.npz', val=val, inner=inner, plain_ours=P[0][vi], centered_ours=Cn[0][vi], bias_ours=B[0],
          plain_public=P[1][vi], centered_public=Cn[1][vi], bias_public=B[1], nwin_val=nwin)
