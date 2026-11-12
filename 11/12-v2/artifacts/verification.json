@@ -1,0 +1,34 @@
+{
+  "scope": "CPU synthetic 36-layer model, four Gloo ranks, pinned official-train OOF arrays, offline Notebook fixtures",
+  "passed_tests": [
+    "test_objective_v2.py",
+    "test_parent_v2.py",
+    "test_distributed_v2.py",
+    "test_pipeline_v2.py",
+    "test_notebook_v2.py",
+    "test_selection_v2.py"
+  ],
+  "four_rank_gradient_max_abs_error": 3.725290298461914e-09,
+  "mid_update_resume_tensor_equal": true,
+  "synthetic_native_export_tensors": 524,
+  "v1_public_reference_reused_by_verified_symlink": true,
+  "actual_pinned_oof_rows": 2699,
+  "actual_pinned_voters": 3,
+  "actual_public_notebook_patch_compiles": true,
+  "four_gpu_launcher_dry_run": true,
+  "full_8b_gpu_smoke": "NOT_RUN_ON_THIS_HOST",
+  "full_8b_training": "NOT_RUN_ON_THIS_HOST",
+  "kaggle_submission": "NOT_SENT",
+  "code_sha256": {
+    "scripts/build_submission.py": "62047b67b6d03889e50d8acb81dd625d6e1d53a2a09000619e32ff341fd3927e",
+    "scripts/decide.py": "db95d34ff669ca4ee822eed63f930dc7330199572cfd548ebd921d77cea5caad",
+    "scripts/evaluate.py": "2871cc877cd3217ff87e566a859b224ebf5f7dfc604e9e5ae117dcfaafc6a94a",
+    "scripts/grpo_train.py": "12a9fec3c2736790001325c33e15718a768c9ec76670e95e9057615a84c4e8ab",
+    "scripts/grpo_v2.py": "dde91705ad565ad162eca7f1c4b6ac70c9bc74a500be1aaed44413e6f1c9873d",
+    "scripts/public_parent.py": "dd005e3a9131da9c3b65f366d7b38e190952cbf6dd9b8f8c83c8cc5cc69b0155",
+    "scripts/publish.py": "9ffff7175d38cdb9d9d57bd4ab6ae4cb944a267d27ca53d0b4f081de1b3c57c4",
+    "scripts/run.py": "1e8acda9bd9e5325160f4f16e61775725bad074f8dcafbda301cb74b6781c2a5",
+    "scripts/runtime_vote.py": "63a1b5c10790f2fe46721ef4b8d21909592020a1356c80ebd71ac40801c21128",
+    "scripts/shared.py": "fca5a7ca09240a506a9dae3781e4a618fc4f430d2d3cc028738bd290e42623bb"
+  }
+}
