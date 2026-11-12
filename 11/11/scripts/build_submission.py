@@ -1,11 +1,4 @@
-"""Build the 11/11 Kaggle notebook from lbjyang/ntl-684-ozertuu-mirror.
-The pinned copy is downloaded to external/pinned_notebook by scripts/assets.py.
-  public_only : notebook unchanged except one leading markdown cell; kernel id/title/privacy are ours
-  ours2/ours4 : + private dataset <username>/ntl-11-11-native (our fold states + calibration + slot spec) and one block
-                after the public native asserts that builds /kaggle/temp/dyl_native_mix (manifest/base -> public;
-                fold<slot> -> ours or public) and sets NATIVE to it. Every slot is shape-checked against public fold0
-                and its calibration fields are checked in every run, the commit included (prints DYL_11_11_NATIVE_MIX OK).
-The scored path (infer.py, native_q8.py, share 0.40, all other members) is not changed."""
+"""Build the public ensemble with required optimized native fold states."""
 import copy, glob, hashlib, json, shutil, sys
 from pathlib import Path
 R = Path(__file__).resolve().parents[1]; SRC = R / 'external/pinned_notebook'
@@ -44,8 +37,8 @@ print('DYL_11_11_NATIVE_MIX OK', dict(sorted(_ds['slots'].items())), flush=True)
 def slots(decision, used):
     """slot -> (source, fold): our folds first (native processes slots in order), public folds fill the rest."""
     s = {str(i): ('ours', int(k)) for i, k in enumerate(used)}
-    for i in range(len(used), 5):
-        s[str(i)] = ('public', i)
+    for i, fold in enumerate((k for k in range(5) if k not in used), len(used)):
+        s[str(i)] = ('public', fold)
     return s
 
 
@@ -55,34 +48,31 @@ def build(decision_path, runs, out, username):
         raise ValueError('Provide your Kaggle username')
     KERNEL, DS = f'{username}/ntl-11-11', f'{username}/ntl-11-11-native'
     D = json.load(open(decision_path)); dec = D['decision']; used = D.get('our_folds_used', [])
-    assert dec in ('public_only', 'ours2', 'ours4') and len(used) == {'public_only': 0, 'ours2': 2, 'ours4': 4}[dec]
+    expected = {'ours2': 2, 'ours4': 4, 'grpo': len(used)}
+    if dec not in expected or not used or len(used) != expected[dec] or len(set(used)) != len(used) or not set(used) <= set(range(5)):
+        raise ValueError('Submission requires completed optimized fold states')
     src_nb = SRC / 'ntl-684-ozertuu-mirror.ipynb'; sha = hashlib.sha256(src_nb.read_bytes()).hexdigest()
     assert SRC_SHA.startswith('@') or sha == SRC_SHA, 'pinned public notebook changed'
     nb = json.load(open(src_nb)); new = copy.deepcopy(nb)
-    md = (f'## 11/11 — decision `{dec}` (validation-gated, see README.md)\n'
-          + ('Public 0.684 pipeline unchanged.' if dec == 'public_only' else
-             f'Native slots: {json.dumps(slots(dec, used))}. Our StyleRank 11/11 fold states (Qwen3-Embedding-8B, public native layout, '
-             f'our trainer) replace public native fold states; everything else unchanged.')
-          + f"\nValidation (held-out official-train rows, proxy stack): {json.dumps(D.get('candidates', {}))}")
+    md = (f'## 11/11 — optimized native fold states `{dec}`\n'
+          + f'Native slots: {json.dumps(slots(dec, used))}. Optimized Qwen3-Embedding-8B states are loaded into the public ensemble.\n'
+          + f"Validation (held-out official-train rows, proxy stack): {json.dumps(D.get('candidates', {}))}")
     new['cells'].insert(0, {'cell_type': 'markdown', 'metadata': {}, 'source': [md]})
-    if dec != 'public_only':
-        cell = new['cells'][3]; src = ''.join(cell['source']); assert src.count(ANCHOR) == 1, 'anchor not found once'
-        cell['source'] = [l for l in (src.replace(ANCHOR, ANCHOR + PATCH)).splitlines(keepends=True)]
+    cell = new['cells'][3]; src = ''.join(cell['source']); assert src.count(ANCHOR) == 1, 'anchor not found once'
+    cell['source'] = [l for l in (src.replace(ANCHOR, ANCHOR + PATCH)).splitlines(keepends=True)]
     out = Path(out); shutil.rmtree(out / 'final', ignore_errors=True); (out / 'final').mkdir(parents=True)
     json.dump(new, open(out / 'final/submission.ipynb', 'w'), indent=1, ensure_ascii=False)
     meta = json.load(open(SRC / 'kernel-metadata.json')); meta.pop('id_no', None)
     meta.update(id=KERNEL, title='11/11', code_file='submission.ipynb', is_private=True)
-    if dec != 'public_only':
-        meta['dataset_sources'] = list(meta['dataset_sources']) + [DS]
+    meta['dataset_sources'] = list(meta['dataset_sources']) + [DS]
     json.dump(meta, open(out / 'final/kernel-metadata.json', 'w'), indent=1)
     up = out / 'upload'; shutil.rmtree(up, ignore_errors=True)
-    if dec != 'public_only':
-        up.mkdir()
-        for k in used:
-            shutil.copy(Path(runs) / f'fold{k}/trainables.safetensors', up / f'dyl11_11_fold{k}_trainables.safetensors')
-            shutil.copy(Path(runs) / f'fold{k}/calibration/fold.json', up / f'dyl11_11_fold{k}_calibration.json')
-        json.dump({'slots': slots(dec, used), 'decision': dec}, open(up / 'dyl_11_11_native.json', 'w'))
-        json.dump({'title': '11/11 native states', 'id': DS, 'licenses': [{'name': 'CC-BY-SA-4.0'}]}, open(up / 'dataset-metadata.json', 'w'))
+    up.mkdir()
+    for k in used:
+        shutil.copy(Path(runs) / f'fold{k}/trainables.safetensors', up / f'dyl11_11_fold{k}_trainables.safetensors')
+        shutil.copy(Path(runs) / f'fold{k}/calibration/fold.json', up / f'dyl11_11_fold{k}_calibration.json')
+    json.dump({'slots': slots(dec, used), 'decision': dec}, open(up / 'dyl_11_11_native.json', 'w'))
+    json.dump({'title': '11/11 native states', 'id': DS, 'licenses': [{'name': 'CC-BY-SA-4.0'}]}, open(up / 'dataset-metadata.json', 'w'))
     return dec, used, sha
 
 

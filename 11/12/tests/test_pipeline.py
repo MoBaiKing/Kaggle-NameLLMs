@@ -140,9 +140,25 @@ def notebook_test(temp):
     original_src, original_sha = B.SRC, B.SRC_SHA
     if not (B.SRC / 'ntl-684-ozertuu-mirror.ipynb').exists():
         B.SRC = temp / 'notebook_fixture'; B.SRC.mkdir()
+        inference = '''%%writefile infer.py
+import numpy as np
+def native_stage(z, code=0):
+    folds = z['folds'].tolist()
+    probs = z['probs']
+    assert np.isfinite(probs).all() and np.allclose(probs.sum(1), 1)
+    return probs
+if False:
+    if False:
+        log('NATIVE SKIPPED: not enough time left')
+    else:
+        try:
+            pass
+        except Exception as _e:
+            log('NATIVE SKIPPED:', repr(_e))
+'''
         fixture = dict(cells=[dict(cell_type='code', metadata={}, outputs=[],
                                   execution_count=None, source=[s])
-                              for s in ('pass', 'pass', B.ANCHOR)], metadata={},
+                              for s in ('pass', 'pass', B.ANCHOR, inference)], metadata={},
                        nbformat=4, nbformat_minor=5)
         path = B.SRC / 'ntl-684-ozertuu-mirror.ipynb'
         path.write_text(json.dumps(fixture))
@@ -151,22 +167,45 @@ def notebook_test(temp):
             id='upstream/fixture', dataset_sources=[], enable_internet=False)))
     try:
         upstream = json.loads((B.SRC / 'ntl-684-ozertuu-mirror.ipynb').read_text())
-        for decision, used in [('public_only', []), ('ours2', [0, 1]), ('ours4', [0, 1, 2, 3])]:
-            d = temp / f'{decision}.json'
-            d.write_text(json.dumps(dict(decision=decision, our_folds_used=used)))
-            output = temp / decision
+        for case, used in enumerate([[0, 1], [1, 3], list(range(5))]):
+            decision = 'grpo'
+            d = temp / f'grpo{case}.json'
+            artifacts = {}
+            for k in used:
+                root = runs / f'fold{k}'
+                done = dict(optimizer_steps=2, public_sha256={'state': 'public source hash'})
+                (root / 'done.json').write_text(json.dumps(done))
+                (root / 'native_eval.json').write_text(json.dumps({'parity_ok': True}))
+                artifacts[str(k)] = {key: hashlib.sha256((root / filename).read_bytes()).hexdigest()
+                    for key, filename in [('done', 'done.json'), ('evaluation', 'native_eval.json'),
+                                          ('state', 'trainables.safetensors'), ('calibration', 'calibration/fold.json')]}
+            d.write_text(json.dumps(dict(decision=decision, method='public_native_grpo',
+                                         our_folds_used=used, artifacts=artifacts)))
+            output = temp / f'grpo{case}'
             B.build(d, runs, output, 'reproducer')
             notebook = json.loads((output / 'final/submission.ipynb').read_text())
             metadata = json.loads((output / 'final/kernel-metadata.json').read_text())
-            assert metadata['id'] == 'reproducer/ntl-11-12'
+            assert metadata['id'] == 'reproducer/ntl-11-12-grpo'
             assert metadata['is_private'] and not metadata['enable_internet']
+            spec = json.loads((output / 'upload/dyl_11_12_native.json').read_text())
+            assert spec['method'] == 'public_native_grpo' and spec['optimized_folds'] == used
+            assert sorted(v[1] for v in spec['slots'].values()) == list(range(5))
             expected = copy.deepcopy(upstream)
             if used:
                 src = ''.join(expected['cells'][2]['source'])
                 expected['cells'][2]['source'] = (src.replace(B.ANCHOR, B.ANCHOR + B.PATCH)).splitlines(keepends=True)
+            for cell in expected['cells']:
+                source = ''.join(cell.get('source', []))
+                if source.startswith('%%writefile infer.py\n'):
+                    cell['source'] = B.strict_native_inference(source).splitlines(keepends=True)
             assert notebook['cells'][1:] == expected['cells']
+            inference_source = next(''.join(c['source']) for c in notebook['cells']
+                                    if ''.join(c.get('source', [])).startswith('%%writefile infer.py\n'))
+            assert 'NATIVE SKIPPED' not in inference_source
+            assert 'GRPO requires all five native folds' in inference_source
+            compile(inference_source.partition('\n')[2], '<strict-public-inference>', 'exec')
             if used:
-                mix = temp / f'{decision}_mix'
+                mix = temp / f'grpo{case}_mix'
                 patch = B.PATCH.replace('/kaggle/input/**/dyl_11_12_native.json',
                                         str(output / 'upload/dyl_11_12_native.json'))
                 patch = patch.replace('/kaggle/temp/dyl_native_mix', str(mix))
@@ -177,8 +216,28 @@ def notebook_test(temp):
                     with safe_open(path, framework='pt') as state:
                         value = state.get_tensor('plain.weight')[0, 0].item()
                     assert value == (2. if slot < len(used) else 1.)
+                # Uploaded bytes changing after a build must fail in Notebook
+                # setup even when the former scratch symlinks still exist.
+                filename = next(iter(spec['sha256']))
+                changed = output / 'upload' / filename
+                changed.write_bytes(changed.read_bytes() + b'changed')
+                try:
+                    exec(compile(patch, '<changed-upload>', 'exec'), dict(
+                        NATIVE=str(public), glob=glob, os=os, json=json, shutil=shutil))
+                except AssertionError:
+                    pass
+                else:
+                    raise AssertionError('Changed uploaded GRPO weights were accepted')
+        # A stale decision cannot package states changed after OOF reporting.
+        (runs / 'fold0/calibration/fold.json').write_text('{}')
+        try:
+            B.build(d, runs, temp / 'stale', 'reproducer')
+        except ValueError as error:
+            assert 'stale' in str(error)
+        else:
+            raise AssertionError('A stale GRPO build plan was accepted')
         print(json.dumps(dict(notebook_build_and_native_slots=True,
-                              decisions=['public_only', 'ours2', 'ours4'])), flush=True)
+                              full_five_folds=True, distinct_partial_folds=True, upload_hashes_checked=True)), flush=True)
     finally:
         B.SRC, B.SRC_SHA = original_src, original_sha
 

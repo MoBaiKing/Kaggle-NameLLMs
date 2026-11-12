@@ -40,4 +40,4 @@ def choose(reports):
     for name, folds, fraction in CANDIDATES:
         if reports.get(name, {}).get('passed', False):
             return name, list(folds)
-    return 'public_only', []
+    raise ValueError('No validated optimized candidate is available')

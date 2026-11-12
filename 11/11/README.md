@@ -138,8 +138,9 @@ python -m torch.distributed.run --standalone --nproc_per_node=4 scripts/train.py
 
 ## 4. 构建和提交
 
-验证结束会生成 `runs/decision.json`，选择 `ours2`、`ours4` 或 `public_only`。
-收益需满足预先定义的 BA、prompt-bootstrap 区间和独立 guard；不满足时使用公开基线，并如实报告。
+验证结束会生成 `runs/decision.json`，记录 `ours2` 或 `ours4` 优化状态及验证对照。
+构建必须提供已完成且通过技术核验的优化折；收益、prompt-bootstrap 区间与独立对照如实报告。
+当前 public 权重上的四卡 GRPO 继续训练入口见 [11/12](../12/README.md)。
 
 ```bash
 python scripts/build_submission.py --username YOUR_KAGGLE_USERNAME

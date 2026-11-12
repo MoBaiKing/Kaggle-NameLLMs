@@ -94,5 +94,10 @@ if __name__ == '__main__':
     assert not assess(y, groups, good, bad, .8)['passed']
     assert not assess(y, groups, good, good, .8)['passed']
     assert choose({'ours4': {'passed': True}, 'ours2': {'passed': True}}) == ('ours4', [0, 1, 2, 3])
-    assert choose({}) == ('public_only', [])
+    try:
+        choose({})
+    except ValueError:
+        pass
+    else:
+        raise AssertionError('Missing optimized candidates must stop the build')
     print(json.dumps(dict(fixed_candidate_gate=True, degraded_model_rejected=True)))

@@ -131,7 +131,7 @@ def notebook_test(temp):
             id='upstream/fixture', dataset_sources=[], enable_internet=False)))
     try:
         upstream = json.loads((B.SRC / 'ntl-684-ozertuu-mirror.ipynb').read_text())
-        for decision, used in [('public_only', []), ('ours2', [0, 1]), ('ours4', [0, 1, 2, 3])]:
+        for decision, used in [('ours2', [0, 1]), ('ours4', [0, 1, 2, 3])]:
             d = temp / f'{decision}.json'
             d.write_text(json.dumps(dict(decision=decision, our_folds_used=used)))
             output = temp / decision
@@ -158,7 +158,7 @@ def notebook_test(temp):
                         value = state.get_tensor('plain.weight')[0, 0].item()
                     assert value == (2. if slot < len(used) else 1.)
         print(json.dumps(dict(notebook_build_and_native_slots=True,
-                              decisions=['public_only', 'ours2', 'ours4'])), flush=True)
+                              decisions=['ours2', 'ours4'])), flush=True)
     finally:
         B.SRC, B.SRC_SHA = original_src, original_sha
 
