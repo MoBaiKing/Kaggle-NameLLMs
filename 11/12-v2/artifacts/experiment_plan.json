@@ -1,0 +1,33 @@
+{
+  "version": "grpo_v2_enumerated_multimodel_vote",
+  "parent_code_commit": "50885b69f5cd4c394303fa5d18dc6d85bd0a5daf",
+  "initialization": "pinned public native fold states; not v1 trained states",
+  "seed": 42,
+  "folds": [0, 1, 2, 3, 4],
+  "world_size": 4,
+  "global_text_batch": 16,
+  "per_rank_micro_windows": 2,
+  "epochs": 1,
+  "updates_per_old_policy": 2,
+  "learning_rate": 0.000002,
+  "clip_epsilon": 0.2,
+  "native_reference_kl_weight": 0.02,
+  "vote_policy_nll_weight": 0.1,
+  "estimator": "18-action enumeration with old-policy probability weights and population reward moments",
+  "estimator_boundary": "not identical to finite sampled-group GRPO",
+  "strong_voter_weights": {"q14v5": 3.0, "q8v5": 2.0, "ll8v5": 1.0},
+  "pre_balance_probability_coefficients": {
+    "complete_public_ensemble": 0.45,
+    "explicit_q14v5": 0.075,
+    "explicit_q8v5": 0.05,
+    "explicit_ll8v5": 0.025,
+    "optimized_native": 0.4
+  },
+  "parent_proxy_boundary": "OOF references cover only three strong members; complete public P, real test grouping and Sinkhorn are not reconstructed",
+  "validation_controls": ["overall_vs_original", "grpo_vs_same_vote"],
+  "deployment_rule": "all predeclared optimized folds; no performance-based replacement of trained states",
+  "frozen": ["public calibration", "reference native", "voter weights", "seed", "folds"],
+  "hidden_test_labels_used": false,
+  "real_gpu_training_launched": false,
+  "new_kaggle_submission_sent": false
+}
