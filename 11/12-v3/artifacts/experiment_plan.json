@@ -1,0 +1,86 @@
+{
+  "version": "v3_oof_weighted_ensemble_ce_wise",
+  "parent_code_commit": "e848ca0953fd3fadc887db75c5aa0eb5ec0c457d",
+  "diagnosed_submission": {
+    "ref": 58283158,
+    "public_lb": 0.669,
+    "baseline_public_only": 0.684
+  },
+  "initialization": "pinned public native fold states; no v1/v2 student state is loaded",
+  "seed": 42,
+  "folds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "world_size": 4,
+  "global_text_batch": 16,
+  "per_rank_micro_windows": 2,
+  "epochs": 1,
+  "optimizer": "AdamW, weight decay 0, grad clip 1.0, one update per global cell",
+  "learning_rate": {
+    "lora": 1e-05,
+    "heads_and_norms": 0.0001,
+    "schedule": "linear warm-up 10% then cosine to 0"
+  },
+  "objective": "class_balance x OOF difficulty weighted label-smoothed CE on log_softmax(0.6 log P_parent + 0.4 log p_native) + 0.05 KL(native || public native)",
+  "label_smoothing": 0.05,
+  "kl_beta": 0.05,
+  "oof_weights": {
+    "formula": "eps + (1 - eps) * (1 - p_oof(y))",
+    "eps": 0.1,
+    "gamma": 1.0,
+    "p_oof": "deploy rule on author native OOF + three-member LoRA OOF parent (T 1.75), groups <= 2, 10 draws",
+    "payload_sha256_built_here": "f81470cff8d130420909ad31d99a385419438e6e29ad19e82cbf587665970a3d"
+  },
+  "parent_proxy": {
+    "members": {
+      "q14v5": 3.0,
+      "q8v5": 2.0,
+      "ll8v5": 1.0
+    },
+    "temperature": 1.75,
+    "boundary": "three public LoRA OOF members only; the full public stack (n14b, q25, deb, comp, GSQ) is not reconstructed"
+  },
+  "deployment": {
+    "notebook": "pinned public 0.684 (sha 340d29bb...), only the five native weight files replaced",
+    "infer_py": "byte-identical to pinned (geometric fusion, per-fold Sinkhorn, public fallbacks)",
+    "wise_alpha": 0.5,
+    "calibration": "pinned public, frozen",
+    "explicit_vote": false
+  },
+  "gate": {
+    "order": [
+      "v3_wise050",
+      "v2_wise050",
+      "v2_full",
+      "public_only"
+    ],
+    "report_only": [
+      "v3_full"
+    ],
+    "pass": "delta > 0 AND 95% prompt-bootstrap lower > -0.30 AND native-alone delta >= -0.50 AND five folds parity_ok",
+    "proxy": "deploy rule (share 0.40, Sinkhorn 0.30 / target 0.35, groups <= 2, 10 draws) on all 2,699 held-out rows",
+    "sensitivity_reported": [
+      "parent_T1.0",
+      "groups_max1",
+      "groups_max3",
+      "no_sinkhorn"
+    ]
+  },
+  "frozen": [
+    "public calibration",
+    "seed",
+    "folds",
+    "wise alpha",
+    "gate order and thresholds",
+    "learning rates",
+    "epochs"
+  ],
+  "hidden_test_labels_used": false,
+  "test_set_used_for_selection": false,
+  "real_gpu_training_launched": false,
+  "new_kaggle_submission_sent": false
+}

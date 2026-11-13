@@ -1,0 +1,34 @@
+{
+  "scope": "CPU only: synthetic tiny 36-layer model on four Gloo ranks, pinned official-train OOF arrays, pinned public notebook; no 8B model was run",
+  "passed_tests": {
+    "test_objective_v3.py": "policy equals infer.py geometric rule; KL zero at reference; hard-row CE gradient; schedule; WiSE exact",
+    "test_proxy_v3.py": "decide_scores and the native_stage line executed from pinned vendor/infer.py equal proxy_v3; notebook flags 0.40/0.30/0.35; member-weight mean 1.75; targets rebuild identical",
+    "test_pipeline_v3.py": "4-rank trainer: public state load, pause after step 1 and resume == uninterrupted (exact), WiSE file exact, completed reuse, changed-protocol rejection, 4-rank vs 1-rank max abs gap 1.18e-05 at max change 0.025",
+    "test_decide_v3.py": "gate on real OOF: identical -> public_only, helpful v3 -> v3_wise050, harmful v3 + helpful v2 -> v2_wise050; built notebook differs from pinned only in the setup cell",
+    "test_notebook_v3.py": "setup patch executed offline: hashes, 5 slots, public calibration; tampered or wrong-shape files rejected"
+  },
+  "oof_targets": {
+    "payload_sha256": "f81470cff8d130420909ad31d99a385419438e6e29ad19e82cbf587665970a3d",
+    "public_rule_oof_ba": 66.13,
+    "parent_only_ba": 64.28,
+    "mean_weight": 0.4418,
+    "rows_p_true_below_half": 1027
+  },
+  "launcher_dry_run": true,
+  "four_gpu_smoke": "NOT_RUN_ON_THIS_HOST",
+  "full_8b_training": "NOT_RUN_ON_THIS_HOST",
+  "kaggle_submission": "NOT_SENT",
+  "code_sha256": {
+    "scripts/build_submission.py": "00db4460099b65d6ad5e6f75c3912894a4f42852e880f3738d04db171fdfe7ff",
+    "scripts/decide_v3.py": "a8c5562cd7712a1d7b9306c76acb23b21a235993ceb127edb5071fd893a92335",
+    "scripts/evaluate_v3.py": "b4fb0169aafa1f463d1c57dcff37296b2efb13cd398477101d642404c8362a54",
+    "scripts/objective_v3.py": "4f0f0ec934857dfdc61be206cbd61b53ab19d2d065fff410017bb7377cf25862",
+    "scripts/oof_targets.py": "c20da84e7b44fbcaa9b6ea1226c2a508624d66989f99b4de411050cfb3d2489d",
+    "scripts/proxy_v3.py": "cabab7175934f3a5a3ecaaf370f06a75079273c4d1ed764ed346c30ae3b61253",
+    "scripts/publish.py": "fb6c0998d77619ac2edd372f83b600ed948defce5b39b230ce01fdbc4c29f1c8",
+    "scripts/run.py": "e7959976311640725064b17a2edda4f0f9a2d8ab07341983bbf8c25051c7e952",
+    "scripts/shared.py": "cc3f3b51858869019470066520de726671cf53dd924a19aa34b5ae4cf850f10d",
+    "scripts/train_v3.py": "57bfa10b9a2d658babc876f7ec73cb98e4bc1a3ccd6eebf485f1b6108bd5ae41",
+    "scripts/wise.py": "4f50239e2d44c9e17e11ecb3f39d36f8fc3c558fbd939b2a79ac72efe7bfa383"
+  }
+}
