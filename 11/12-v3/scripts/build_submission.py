@@ -1,7 +1,7 @@
 """Build the private Kaggle Notebook: the pinned public 0.684 notebook with the five native fold weight files
 swapped. infer.py keeps the public fusion, Sinkhorn and every other member; the only edit is that the two
-"NATIVE SKIPPED" fallbacks now raise, so a run in which our native weights did not score cannot silently turn
-into a public-blend submission. The builder asserts that nothing else in infer.py changed. No explicit vote, no
+"NATIVE SKIPPED" fallbacks now delete the blend-only output and raise, so a run in which our native weights did
+not score cannot silently turn into a public-blend submission. The builder asserts that nothing else in infer.py changed. No explicit vote, no
 arithmetic re-mixing; every fold file must differ from the public weights. No upload or submission here."""
 import copy
 import hashlib
@@ -57,9 +57,9 @@ print('DYL_11_12_V3_NATIVE_MIX OK', _ds['candidate'], dict(sorted(_ds['slots'].i
 
 STRICT = {
     "        log('NATIVE SKIPPED: not enough time left')":
-        "        raise RuntimeError('Our native weights could not run in time; refusing a public-blend fallback')",
+        "        os.path.exists(a.out) and os.remove(a.out); raise RuntimeError('Our native weights could not run in time; refusing a public-blend fallback')",
     "            log('NATIVE SKIPPED:', repr(_e))":
-        "            raise RuntimeError('Our native stage failed; refusing a public-blend fallback') from _e",
+        "            os.path.exists(a.out) and os.remove(a.out); raise RuntimeError('Our native stage failed; refusing a public-blend fallback') from _e",
 }
 
 

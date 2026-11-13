@@ -1,0 +1,45 @@
+{
+  "scope": "CPU only: tiny random Qwen3 models on four Gloo ranks, pinned official-train OOF arrays, pinned public notebook; no 1.7B/8B model was run",
+  "passed_tests": {
+    "test_a1_v4.py": "graded SupCon / sibling margin / replay-cell units; 4-rank A1 with official + replay cells, pause after step 2 and resume == uninterrupted, WiSE export, reuse, protocol guard",
+    "test_a2_v4.py": "CCL-Gen score == manual sum of next-token log-probs after the class prefix; state round trip; candidate sets; 4-rank DDP pause/resume == uninterrupted; protocol guard; OOF scoring + bundle",
+    "test_sage_v4.py": "typography tables normalize; row-relative features; exact conditional-logit optimum; sibling gate; runtime uses A2 where scored and the no-A2 weights when the A2 worker fails",
+    "test_decide_v4.py": "real OOF + synthetic A1/A2: informative A2 -> S3-S1 +14.53 [13.04, 16.04]; random A2 -> +0.15 [-0.04, 0.37]; notebook differs from pinned only in setup cell, 2 new cells, 3 infer.py anchors; setup patch runs offline; wrong A2 base rejected"
+  },
+  "analysis_on_real_oof": {
+    "proxy_anchor_plateau": "0.70-0.825, smoothed peak 0.725 -> anchor 0.75",
+    "final_B_without_A2": {
+      "share_0.40": "-0.07 [-0.45, 0.30]",
+      "share_0.75": "+0.07 [-0.11, 0.26]"
+    },
+    "error_structure": "top-1/2/3/5 66.1/84.2/91.9/98.3; 61% of errors within family"
+  },
+  "built_here": {
+    "external_v4_payload_sha256": "d7806a613035d0fee39f6fe5fe2230b6c9d411fb908131fe90a9318426dc9bd2",
+    "oof_targets_v4_payload_sha256": "eadbf1861ed0b132cf345d6b30c129b57aea22b88ae15e0b34f50e19bafdef8d"
+  },
+  "launcher_dry_run": true,
+  "four_gpu_smoke": "NOT_RUN_ON_THIS_HOST",
+  "a1_training": "NOT_RUN_ON_THIS_HOST",
+  "a2_training": "NOT_RUN_ON_THIS_HOST",
+  "kaggle_submission": "NOT_SENT",
+  "code_sha256": {
+    "scripts/a1_evaluate.py": "0c43e0d9b90c6f33a03e07294bfed3474e716b345e108546cd33e286a2b1c033",
+    "scripts/a1_objective.py": "80e307fbaf3572ae2c9db8a9b7d674fecd4579e9a00ebeecc5e1cba60834caa4",
+    "scripts/a1_train.py": "19e68893c4df740549055dfb53595586bee1ff1c544426fd32c42d6608759c42",
+    "scripts/a2_score.py": "af6cf778952f985399dec2229abfdb6e6558df2f8c4482509c039349e6892ce9",
+    "scripts/a2_train.py": "3563ff4a3158aa832099f9ebde214e59fddde40f2b9f2f82dafc575dc2244447",
+    "scripts/assets_v4.py": "09405c21803d129226d804cff393cc38c2675c269a7fbacb9522ad176735a970",
+    "scripts/build_submission.py": "0263b3ba219a289192cdaedf7971a935d72b87731c9d6234851a5f757126068c",
+    "scripts/ccl_gen.py": "8d9cbe98fda9edf5d07168bdb0890d4f10966556d44030db23cacf403775cfcc",
+    "scripts/decide_v4.py": "f97c3e2f51cc9d056392b4f691f7329279ee3092e657645ec55ed01013eeb267",
+    "scripts/external_v4.py": "96be5d9409c02eb49a71acd785d2b5acd8e74b9cd920b03a8aabf35f5da4378e",
+    "scripts/families.py": "1cbb5509300692c922e41822f2a9c93db2f0b74aa9478f05872f31b8879d872d",
+    "scripts/oof_targets_v4.py": "d6be557b3b6460ae81c1a37bc922a1bab3127276c6d358be0a2bbc828b3228ff",
+    "scripts/proxy_v4.py": "545d8881c096d921036cb21f66374fa1d474f4ec4d4c3174b866a07a3b312164",
+    "scripts/publish.py": "c9f1421b8db761ca85ca84da91ed26e2fd7a6bf6d696c51b23049d5720f3c3c1",
+    "scripts/run.py": "917111b318f4460f594c1c4d840ed6d4da882479bca2204a845cdb610bffecf2",
+    "scripts/sage.py": "f164a92045ad3fce2d19c054651d66799f4c29cf0224abea45c881ad4b59cbf4",
+    "scripts/shared.py": "8d5de8fe0af78a943203df8e27f4b1bb5bf0bb77cf81156e7861ff60bd24accb"
+  }
+}
