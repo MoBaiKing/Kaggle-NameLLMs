@@ -1,5 +1,5 @@
 """Four cooperating GPUs, folds in sequence: OOF targets (CPU) -> v3 continuation -> native GPU validation;
-optional Option-A fallback from finished v2 states; then the pre-registered proxy gate (decide_v3.py).
+optional v2 comparison (diagnostics only); then the proxy evidence report (decide_v3.py). No public fallback.
 Re-running the same command resumes: finished folds and passed evaluations are verified and reused."""
 import argparse
 import datetime as dt
@@ -21,7 +21,7 @@ def main():
     p.add_argument('--folds', default='0,1,2,3,4', help='All five are needed for the gate')
     p.add_argument('--minutes', type=float, default=90, help='Per-fold training window; expiry saves and pauses')
     p.add_argument('--micro-batch', type=int, default=2, help='Windows per rank; GLOBAL text batch remains 16')
-    p.add_argument('--v2-runs', type=Path, default=None, help='Finished 11/12-v2/runs_grpo for the Option-A fallback')
+    p.add_argument('--v2-runs', type=Path, default=None, help='Finished 11/12-v2/runs_grpo, evaluated for comparison only (costs 5 extra GPU evaluations)')
     p.add_argument('--out', type=Path, help='Separate run directory for a new fixed configuration')
     p.add_argument('--smoke', action='store_true')
     p.add_argument('--dry-run', action='store_true')
@@ -71,17 +71,17 @@ def main():
     if a.smoke:
         print(json.dumps(dict(status='SMOKE_DONE', runs=str(runs))), flush=True)
         return
-    fallback = None
+    diagnostics = None
     if a.v2_runs:
-        fallback = runs / 'fallback_v2'
+        diagnostics = runs / 'v2_diagnostics'
         execute([sys.executable, str(ROOT / 'scripts/wise.py'), '--from-v2', str(a.v2_runs.resolve()),
-                 '--out', str(fallback)], cpu=True)
+                 '--out', str(diagnostics)], cpu=True)
         for k in range(5):
-            if a.dry_run or not (fallback / f'fold{k}/native_eval.json').exists():
-                execute([sys.executable, str(ROOT / 'scripts/evaluate_v3.py'), '--run', str(fallback / f'fold{k}'),
+            if a.dry_run or not (diagnostics / f'fold{k}/native_eval.json').exists():
+                execute([sys.executable, str(ROOT / 'scripts/evaluate_v3.py'), '--run', str(diagnostics / f'fold{k}'),
                          '--fold', str(k), '--gpus', '4'])
     execute([sys.executable, str(ROOT / 'scripts/decide_v3.py'), '--runs', str(runs), '--targets', str(targets),
-             '--out', str(runs / 'decision.json')] + (['--fallback', str(fallback)] if fallback else []), cpu=True)
+             '--out', str(runs / 'decision.json')] + (['--v2-diagnostics', str(diagnostics)] if diagnostics else []), cpu=True)
 
 
 if __name__ == '__main__':

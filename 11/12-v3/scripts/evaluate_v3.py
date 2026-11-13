@@ -4,7 +4,7 @@ native_q8 runtime (fp16, covering windows, token-weighted):
 Checks: public-runtime parity (public slot reproduces the author's OOF argmax >= 0.98) and export parity
 (continued state agrees with the trainer's own first-window predictions on single-window rows >= 0.97).
 Calibration stays the pinned public one. --smoke scores a few rows only (code/format test before training).
-Works for v3 run directories (done.json) and the v2 fallback family prepared by wise.py (source.json)."""
+Works for v3 run directories (done.json) and v2 comparison states prepared by wise.py (source.json)."""
 import argparse
 import json
 import os
@@ -33,9 +33,9 @@ def identity(run, k):
         return dict(family='v3_oofce', done_sha256=sha(run / 'done.json'))
     source = json.loads((run / 'source.json').read_text())
     if source['fold'] != k or source['family'] != 'v2_grpo':
-        raise ValueError('Fallback directory does not match the requested fold')
+        raise ValueError('v2 comparison directory does not match the requested fold')
     if sha(run / 'trainables.safetensors') != source['state_sha256'] or sha(run / 'trainables_wise050.safetensors') != source['wise050_sha256']:
-        raise ValueError('Changed fallback state')
+        raise ValueError('Changed v2 comparison state')
     return dict(family='v2_grpo', source_sha256=sha(run / 'source.json'))
 
 

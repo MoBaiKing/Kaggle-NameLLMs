@@ -1,6 +1,8 @@
-"""Build the private Kaggle Notebook: the pinned public 0.684 notebook with ONLY the five native fold weight
-files swapped. infer.py (fusion, Sinkhorn, fallbacks, every other member) stays byte-identical, which the
-builder asserts; there is no explicit vote and no arithmetic re-mixing. No upload or submission here."""
+"""Build the private Kaggle Notebook: the pinned public 0.684 notebook with the five native fold weight files
+swapped. infer.py keeps the public fusion, Sinkhorn and every other member; the only edit is that the two
+"NATIVE SKIPPED" fallbacks now raise, so a run in which our native weights did not score cannot silently turn
+into a public-blend submission. The builder asserts that nothing else in infer.py changed. No explicit vote, no
+arithmetic re-mixing; every fold file must differ from the public weights. No upload or submission here."""
 import copy
 import hashlib
 import json
@@ -11,6 +13,7 @@ from shared import ROOT as R, BASE
 from oof_targets import sha as file_sha
 
 SRC = BASE / 'external/pinned_notebook'
+NATIVE = BASE / 'external/native_q8/ntl-native-q8-multidepth-fivefold-0679'
 SRC_SHA = '340d29bb90e4dc60a9f8bba1bc79bdc69b0faa1bf65d04e367e78a1ed264297f'
 SPEC_NAME = 'dyl_11_12_v3_native.json'
 ANCHOR = "assert os.path.exists(f'{NATIVE}/base/model.safetensors.index.json') and os.path.exists(f'{NATIVE_BASE}/model.safetensors.index.json'), (NATIVE, NATIVE_BASE)"
@@ -52,6 +55,22 @@ assert all(os.path.exists(f'{NATIVE}/fold{k}/trainables.safetensors') and os.pat
 print('DYL_11_12_V3_NATIVE_MIX OK', _ds['candidate'], dict(sorted(_ds['slots'].items())), flush=True)'''
 
 
+STRICT = {
+    "        log('NATIVE SKIPPED: not enough time left')":
+        "        raise RuntimeError('Our native weights could not run in time; refusing a public-blend fallback')",
+    "            log('NATIVE SKIPPED:', repr(_e))":
+        "            raise RuntimeError('Our native stage failed; refusing a public-blend fallback') from _e",
+}
+
+
+def strict_native(source):
+    for before, after in STRICT.items():
+        if source.count(before) != 1:
+            raise ValueError('Pinned native fallback anchor changed')
+        source = source.replace(before, after)
+    return source
+
+
 def build(decision_path, out, username):
     if not username or '/' in username:
         raise ValueError('Provide your Kaggle username')
@@ -59,8 +78,9 @@ def build(decision_path, out, username):
     D = json.loads(Path(decision_path).read_text())
     if D.get('method') != 'public_native_oofce_v3':
         raise ValueError('Not a v3 decision file')
-    if D['decision'] == 'public_only':
-        raise SystemExit('Gate chose public_only: nothing to build; the unchanged public 0.684 notebook is the result')
+    if D['decision'] != 'v3_wise050' or D['chosen']['family'] != 'v3' or D['evidence'].get('public_fallback'):
+        raise ValueError('Only our own v3 increment is built; there is no public fallback')
+    public_hashes = json.loads((NATIVE / 'manifest.json').read_text())['file_hashes']
     chosen = D['chosen']; root = Path(chosen['root']); filename = chosen['filename']
     key = f"{chosen['variant']}_sha256"
     files = {}
@@ -69,6 +89,8 @@ def build(decision_path, out, username):
         run = root / f'fold{k}'
         if file_sha(run / 'native_eval.json') != record['evaluation_sha256'] or file_sha(run / filename) != record[key]:
             raise ValueError(f'Build plan is stale: fold{k}')
+        if record[key] == public_hashes[f'fold{k}/trainables.safetensors']:
+            raise ValueError(f'fold{k} equals the public weights; that would resubmit the public notebook')
         files[k] = run / filename
     src_nb = SRC / 'ntl-684-ozertuu-mirror.ipynb'
     digest = hashlib.sha256(src_nb.read_bytes()).hexdigest()
@@ -76,18 +98,23 @@ def build(decision_path, out, username):
         raise ValueError('Pinned public notebook changed')
     nb = json.loads(src_nb.read_text()); new = copy.deepcopy(nb)
     md = (f"## 11/12-v3 — native fold states `{D['decision']}`\n"
-          'Pinned public 0.684 notebook; only the five Qwen3-Embedding-8B native fold weight files are replaced. '
-          'Fusion, Sinkhorn, fallbacks and all other members are unchanged.\n'
+          'Pinned public 0.684 notebook with the five Qwen3-Embedding-8B native fold weight files replaced. '
+          'Fusion, Sinkhorn and all other members are unchanged; a failed or skipped native stage now stops the run '
+          'instead of falling back to the public blend.\n'
           f"Validation proxy (official-train held-out rows, not the leaderboard): "
-          f"{json.dumps({k: {m: v[m] for m in ('base_ba', 'ba', 'delta', 'ci95', 'standalone_native_delta')} for k, v in D['candidates'].items()})}")
+          f"{json.dumps({k: {m: v[m] for m in ('base_ba', 'ba', 'delta', 'ci95', 'standalone_native_delta', 'proxy_supports')} for k, v in D['candidates'].items()})}")
     new['cells'].insert(0, {'cell_type': 'markdown', 'metadata': {}, 'source': [md]})
     cell = new['cells'][3]; src = ''.join(cell['source'])
     if src.count(ANCHOR) != 1:
         raise ValueError('Native anchor not found exactly once')
     cell['source'] = src.replace(ANCHOR, ANCHOR + PATCH).splitlines(keepends=True)
+    engine = [i for i, c in enumerate(new['cells']) if ''.join(c.get('source', [])).startswith('%%writefile infer.py\n')]
+    if len(engine) != 1:
+        raise ValueError('Expected exactly one public inference engine')
+    new['cells'][engine[0]]['source'] = strict_native(''.join(new['cells'][engine[0]]['source'])).splitlines(keepends=True)
     changed = [i for i, (a, b) in enumerate(zip(nb['cells'], new['cells'][1:])) if a['source'] != b['source']]
-    if changed != [2]:
-        raise ValueError(f'Only the setup cell may change, got {changed}')
+    if changed != [2, engine[0] - 1]:
+        raise ValueError(f'Only the setup cell and the two native fallbacks may change, got {changed}')
     out = Path(out); shutil.rmtree(out / 'final', ignore_errors=True); (out / 'final').mkdir(parents=True)
     (out / 'final/submission.ipynb').write_text(json.dumps(new, indent=1, ensure_ascii=False))
     meta = json.loads((SRC / 'kernel-metadata.json').read_text()); meta.pop('id_no', None)

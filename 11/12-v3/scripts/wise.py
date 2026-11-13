@@ -2,7 +2,8 @@
 
 alpha = 1 is the continued state, alpha = 0 the public one. Every tensor (LoRA A/B, layer norms, both heads)
 is interpolated in float64 and stored as float32 in the unchanged public key layout, so native_q8 loads it
-as is. Also prepares v2 GRPO states as the Option-A fallback family without touching the v2 run directory.
+as is. Can also prepare finished v2 GRPO states for COMPARISON ONLY (never a submission candidate),
+without touching the v2 run directory.
 """
 import argparse
 import json
@@ -34,7 +35,7 @@ def interpolate(public, tuned, alpha, out):
 
 
 def from_v2(v2_runs, out, folds):
-    """Fallback family A: verified v2 states (alpha 1) plus their alpha 0.5 interpolation."""
+    """Diagnostics only: verified v2 states (alpha 1) plus their alpha 0.5 interpolation."""
     made = {}
     for k in folds:
         source = Path(v2_runs) / f'fold{k}'
@@ -66,7 +67,7 @@ def from_v2(v2_runs, out, folds):
 if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--from-v2', type=Path, required=True, help='11/12-v2/runs_grpo')
-    p.add_argument('--out', type=Path, default=ROOT / 'runs_v3/fallback_v2')
+    p.add_argument('--out', type=Path, default=ROOT / 'runs_v3/v2_diagnostics')
     p.add_argument('--folds', default='0,1,2,3,4')
     a = p.parse_args()
     print(json.dumps(from_v2(a.from_v2, a.out, [int(k) for k in a.folds.split(',')]), indent=1))

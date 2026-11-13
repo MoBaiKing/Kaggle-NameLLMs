@@ -46,22 +46,22 @@
   },
   "deployment": {
     "notebook": "pinned public 0.684 (sha 340d29bb...), only the five native weight files replaced",
-    "infer_py": "byte-identical to pinned (geometric fusion, per-fold Sinkhorn, public fallbacks)",
+    "infer_py": "public fusion, Sinkhorn and members unchanged; only the two NATIVE SKIPPED fallbacks raise instead of submitting a public blend",
     "wise_alpha": 0.5,
     "calibration": "pinned public, frozen",
-    "explicit_vote": false
+    "explicit_vote": false,
+    "public_weights_refused": true
   },
   "gate": {
-    "order": [
-      "v3_wise050",
-      "v2_wise050",
-      "v2_full",
-      "public_only"
-    ],
+    "submission_candidate": "v3_wise050 (fixed before training)",
+    "public_fallback": false,
+    "decision": "v3_wise050 once all five folds trained and passed parity; otherwise not ready (nothing built)",
+    "evidence": "proxy_supports = delta > 0 AND 95% lower > -0.30 AND native-alone delta >= -0.50; proxy_warning if 95% upper < 0",
     "report_only": [
-      "v3_full"
+      "v3_full",
+      "v2_wise050",
+      "v2_full"
     ],
-    "pass": "delta > 0 AND 95% prompt-bootstrap lower > -0.30 AND native-alone delta >= -0.50 AND five folds parity_ok",
     "proxy": "deploy rule (share 0.40, Sinkhorn 0.30 / target 0.35, groups <= 2, 10 draws) on all 2,699 held-out rows",
     "sensitivity_reported": [
       "parent_T1.0",
@@ -82,5 +82,12 @@
   "hidden_test_labels_used": false,
   "test_set_used_for_selection": false,
   "real_gpu_training_launched": false,
-  "new_kaggle_submission_sent": false
+  "new_kaggle_submission_sent": false,
+  "amendments": [
+    {
+      "date": "2026-11-12",
+      "before_training": true,
+      "change": "user: never submit the public version, no fallback submissions; removed public_only and the v2 fallback chain, decision is always our v3_wise050 with proxy evidence; native skip fallbacks raise"
+    }
+  ]
 }

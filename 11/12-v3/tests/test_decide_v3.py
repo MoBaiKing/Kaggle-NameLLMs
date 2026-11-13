@@ -1,6 +1,7 @@
-"""Gate behaviour on the real pinned OOF with synthetic candidate outputs (CPU, no model):
-identical states -> public_only; a v3 state that helps -> v3_wise050; v3 harmful but v2 helpful -> v2 fallback.
-Also builds the Notebook from the chosen plan and checks that only the setup cell differs from the pinned one."""
+"""Decision on the real pinned OOF with synthetic candidate outputs (CPU, no model). There is no public
+fallback: the decision is always our v3_wise050 once five folds are ready, with proxy evidence attached
+(identical -> no support; helpful -> support; harmful -> warning, v2 only reported). Missing folds -> not ready.
+Also builds the Notebook and checks that only the setup cell and the two native fallbacks differ from the pinned one."""
 import contextlib
 import io
 import json
@@ -44,7 +45,7 @@ def family(root, kind, change, seed):
 
 def decide(root, v3, v2):
     argv = sys.argv[:]
-    sys.argv = ['decide_v3.py', '--runs', str(v3), '--fallback', str(v2), '--out', str(root / 'decision.json')]
+    sys.argv = ['decide_v3.py', '--runs', str(v3), '--v2-diagnostics', str(v2), '--out', str(root / 'decision.json')]
     try:
         with contextlib.redirect_stdout(io.StringIO()):
             D.main()
@@ -55,31 +56,63 @@ def decide(root, v3, v2):
 
 def test(root):
     results = {}
-    for case, (v3_change, v2_change, expected) in enumerate([('none', 'none', 'public_only'),
-                                                             ('help', 'none', 'v3_wise050'),
-                                                             ('harm', 'help', 'v2_wise050')]):
+    for case, (v3_change, v2_change, supports, warning) in enumerate([('none', 'none', False, False),
+                                                                      ('help', 'none', True, False),
+                                                                      ('harm', 'help', False, True)]):
         base = root / f'case{case}'
         family(base / 'v3', 'v3', v3_change, 10 + case); family(base / 'v2', 'v2', v2_change, 20 + case)
         out = decide(base, base / 'v3', base / 'v2')
-        assert out['decision'] == expected, (case, out['decision'], {k: (v['delta'], v['ci95'], v['passed']) for k, v in out['candidates'].items()})
-        results[expected] = {k: round(v['delta'], 2) for k, v in out['candidates'].items()}
+        main = out['candidates']['v3_wise050']
+        assert out['decision'] == 'v3_wise050' and out['evidence']['public_fallback'] is False
+        assert main['proxy_supports'] == supports and bool(main['proxy_warning']) == warning, (case, main)
+        assert out['evidence']['proxy_supports'] == supports
+        results[v3_change] = {k: round(v['delta'], 2) for k, v in out['candidates'].items()}
         if case == 0:
             assert all(abs(v['delta']) < 1e-9 for v in out['candidates'].values())
             assert abs(out['proxy']['public_proxy_ba'] - 66.1) < 1.0, out['proxy']['public_proxy_ba']
-        if expected != 'public_only':
-            plan = B.build(base / 'decision.json', base / 'submission', 'reproducer')
-            nb = json.loads(Path(plan['notebook']).read_text())
-            pinned = json.loads((B.SRC / 'ntl-684-ozertuu-mirror.ipynb').read_text())
-            assert len(nb['cells']) == len(pinned['cells']) + 1
-            diff = [i for i, (a, b) in enumerate(zip(pinned['cells'], nb['cells'][1:])) if a['source'] != b['source']]
-            assert diff == [2] and B.PATCH in ''.join(nb['cells'][3]['source'])
-            compile(''.join(nb['cells'][3]['source']), 'setup-cell', 'exec')
-            spec = json.loads((base / 'submission/upload' / B.SPEC_NAME).read_text())
-            assert spec['candidate'] == expected and len(spec['sha256']) == 5
-            meta = json.loads((base / 'submission/final/kernel-metadata.json').read_text())
-            assert meta['id'] == 'reproducer/ntl-11-12-v3' and meta['is_private'] and not meta['enable_internet']
-            assert 'reproducer/ntl-11-12-v3-native' in meta['dataset_sources']
-    print(json.dumps(dict(gate_cases=results, notebook_only_setup_cell_changed=True)))
+        plan = B.build(base / 'decision.json', base / 'submission', 'reproducer')
+        nb = json.loads(Path(plan['notebook']).read_text())
+        pinned = json.loads((B.SRC / 'ntl-684-ozertuu-mirror.ipynb').read_text())
+        assert len(nb['cells']) == len(pinned['cells']) + 1
+        diff = [i for i, (a, b) in enumerate(zip(pinned['cells'], nb['cells'][1:])) if a['source'] != b['source']]
+        engine = next(i for i, c in enumerate(pinned['cells']) if ''.join(c['source']).startswith('%%writefile infer.py'))
+        assert diff == [2, engine] and B.PATCH in ''.join(nb['cells'][3]['source'])
+        before = ''.join(pinned['cells'][engine]['source']).splitlines()
+        after = ''.join(nb['cells'][engine + 1]['source']).splitlines()
+        changed = [(x, z) for x, z in zip(before, after) if x != z]
+        assert len(before) == len(after) and len(changed) == 2 and all('NATIVE SKIPPED' in x and 'raise RuntimeError' in z for x, z in changed)
+        compile(''.join(nb['cells'][3]['source']), 'setup-cell', 'exec')
+        compile('\n'.join(after[1:]), 'infer.py', 'exec')
+        spec = json.loads((base / 'submission/upload' / B.SPEC_NAME).read_text())
+        assert spec['candidate'] == 'v3_wise050' and len(spec['sha256']) == 5
+        meta = json.loads((base / 'submission/final/kernel-metadata.json').read_text())
+        assert meta['id'] == 'reproducer/ntl-11-12-v3' and meta['is_private'] and not meta['enable_internet']
+        assert 'reproducer/ntl-11-12-v3-native' in meta['dataset_sources']
+    # A fold file identical to the public weights is refused (no public resubmission).
+    fake = root / 'fake_native'; fake.mkdir()
+    manifest = json.loads((B.NATIVE / 'manifest.json').read_text())
+    manifest['file_hashes']['fold3/trainables.safetensors'] = sha(root / 'case1/v3/fold3/trainables_wise050.safetensors')
+    (fake / 'manifest.json').write_text(json.dumps(manifest))
+    real, B.NATIVE = B.NATIVE, fake
+    try:
+        B.build(root / 'case1/decision.json', root / 'public_build', 'reproducer')
+    except ValueError as error:
+        assert 'equals the public weights' in str(error), error
+    else:
+        raise AssertionError('Public weights were accepted')
+    finally:
+        B.NATIVE = real
+    # Incomplete v3 -> not ready, nothing decided.
+    import shutil
+    shutil.rmtree(root / 'case1/v3/fold4')
+    try:
+        decide(root / 'case1', root / 'case1/v3', root / 'case1/v2')
+    except SystemExit as error:
+        assert 'not ready' in str(error)
+    else:
+        raise AssertionError('Incomplete v3 produced a decision')
+    print(json.dumps(dict(decision_always_ours=True, evidence_cases=results, public_weights_refused=True,
+                          incomplete_not_ready=True, notebook_only_setup_and_native_fallbacks_changed=True)))
 
 
 if __name__ == '__main__':

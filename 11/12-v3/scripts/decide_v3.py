@@ -1,14 +1,17 @@
-"""Pre-registered gate on a deployment-faithful validation proxy (CPU; reads saved GPU outputs only).
+"""Validation evidence for our own v3 increment on a deployment-faithful proxy (CPU; reads saved GPU outputs only).
 
 All 2,699 official rows, each scored by the native state that never saw it (public or continued), fused with
 the frozen LoRA OOF parent exactly as the 0.684 notebook does (proxy_v3.deploy: geometric 0.6/0.4, Sinkhorn
 0.30 / target mix 0.35, test-like groups of <= 2 answers, 10 grouping draws). Candidates are compared with the
 public native under the SAME rule, paired, with a prompt-cluster bootstrap.
 
-Adoption order (fixed before training): v3_wise050, then the Option-A fallback v2_wise050, v2_full, else
-public_only. A candidate passes iff delta > 0, the 95% lower bound > -0.30 BA points, all five folds passed
-parity, and the native expert alone does not lose more than 0.50 BA (guards against over-fitting to the
-three-member proxy parent, which is not the full public stack). v3_full is reported, never adopted.
+There is NO public fallback: the unchanged public notebook is never a submission outcome. The submission
+candidate is fixed before training: v3_wise050 (WiSE alpha 0.5). The decision is v3_wise050 whenever all five
+folds trained and passed export/runtime parity; otherwise the run is not ready and nothing is built.
+The proxy numbers are evidence, not a switch to the public version: `proxy_supports` is true iff delta > 0,
+the 95% lower bound > -0.30 BA points and the native expert alone loses at most 0.50 BA; `proxy_warning` flags
+a clearly harmful result (95% upper bound < 0) so the user can decide before spending a submission.
+v3_full and optional v2 states (--v2-diagnostics) are reported for comparison only.
 This is a validation proxy on official training rows; it is not the hidden test or the leaderboard.
 """
 import argparse
@@ -23,8 +26,8 @@ from shared import BASE, ROOT  # noqa: E402
 import proxy_v3 as X  # noqa: E402
 import oof_targets as T  # noqa: E402
 
-ORDER = ['v3_wise050', 'v2_wise050', 'v2_full']
-REPORT_ONLY = ['v3_full']
+CANDIDATE = 'v3_wise050'
+REPORT_ONLY = ['v3_full', 'v2_wise050', 'v2_full']
 DELTA_MIN, LOWER_MIN, STANDALONE_MIN = 0.0, -0.30, -0.50
 VARIANT_FILE = {'full': ('ours', 'trainables.safetensors'), 'wise050': ('wise050', 'trainables_wise050.safetensors')}
 
@@ -99,7 +102,7 @@ def evaluate(families, C, parent, prior, states, settings):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--runs', type=Path, default=ROOT / 'runs_v3')
-    p.add_argument('--fallback', type=Path, default=None, help='runs_v3/fallback_v2 prepared by wise.py (Option A)')
+    p.add_argument('--v2-diagnostics', type=Path, default=None, help='runs_v3/v2_diagnostics prepared by wise.py (comparison only)')
     p.add_argument('--targets', type=Path, default=T.DEFAULT)
     p.add_argument('--out', type=Path, default=None)
     a = p.parse_args()
@@ -109,7 +112,7 @@ def main():
     prior = X.label_prior(C.y_all)
     states = {k: C.public_state(k) for k in range(5)}
     families, missing = {}, {}
-    for fam, root in (('v3', a.runs), ('v2', a.fallback)):
+    for fam, root in (('v3', a.runs), ('v2', a.v2_diagnostics)):
         if root is None:
             missing[fam] = 'not provided'
             continue
@@ -122,8 +125,8 @@ def main():
         gap = np.abs(families['v3']['arrays']['plain_public'] - families['v2']['arrays']['plain_public']).max()
         if gap > 1e-2:
             raise ValueError(f'Public slot differs between families ({gap:.4f}); runtimes are not comparable')
-    if not families:
-        raise SystemExit(f'No complete candidate family: {missing}')
+    if 'v3' not in families:
+        raise SystemExit(f'v3 is not ready (no public fallback exists, nothing to decide): {missing.get("v3")}')
     parent_t1 = X.lsm(parent / X.PARENT_TEMPERATURE)
     settings = {'primary': (parent, X.GROUP_MAX, X.SINKHORN), 'parent_T1.0': (parent_t1, X.GROUP_MAX, X.SINKHORN),
                 'groups_max1': (parent, 1, X.SINKHORN), 'groups_max3': (parent, 3, X.SINKHORN),
@@ -131,7 +134,7 @@ def main():
     probs = evaluate(families, C, parent, prior, states, settings)
     row_fold = C_row_fold(C)
     reports = {}
-    for cand in [c for c in ORDER + REPORT_ONLY if c in probs['primary']]:
+    for cand in [c for c in [CANDIDATE] + REPORT_ONLY if c in probs['primary']]:
         final, alone = probs['primary'][cand]
         pub_final, pub_alone = probs['primary']['public']
         r = X.paired_report(C.y_all, C.pid, pub_final, final)
@@ -140,22 +143,21 @@ def main():
                                              - X.ba(C.y_all[row_fold == k], pub_final[row_fold == k].argmax(1))) for k in range(5)}
         r['sensitivity_delta'] = {s: 100 * (X.ba(C.y_all, probs[s][cand][0].argmax(1)) - X.ba(C.y_all, probs[s]['public'][0].argmax(1)))
                                   for s in settings if s != 'primary'}
-        r['passed'] = bool(cand in ORDER and r['delta'] > DELTA_MIN and r['ci95'][0] > LOWER_MIN
-                           and r['standalone_native_delta'] >= STANDALONE_MIN)
+        r['proxy_supports'] = bool(r['delta'] > DELTA_MIN and r['ci95'][0] > LOWER_MIN
+                                   and r['standalone_native_delta'] >= STANDALONE_MIN)
+        r['proxy_warning'] = 'clearly harmful on the proxy (95% upper bound < 0)' if r['ci95'][1] < 0 else None
         reports[cand] = r
-    decision = next((c for c in ORDER if reports.get(c, {}).get('passed')), 'public_only')
-    chosen = None
-    if decision != 'public_only':
-        fam, variant = decision.split('_', 1)
-        root = a.runs if fam == 'v3' else a.fallback
-        chosen = dict(family=fam, variant=variant, filename=VARIANT_FILE[variant][1], root=str(root.resolve()),
-                      folds=families[fam]['records'])
+    decision = CANDIDATE
+    chosen = dict(family='v3', variant='wise050', filename=VARIANT_FILE['wise050'][1], root=str(a.runs.resolve()),
+                  folds=families['v3']['records'])
     out = dict(decision=decision, method='public_native_oofce_v3', chosen=chosen,
-               rule=dict(order=ORDER, report_only=REPORT_ONLY, delta_min=DELTA_MIN, ci95_lower_min=LOWER_MIN,
-                         standalone_native_delta_min=STANDALONE_MIN),
+               evidence=dict(candidate=CANDIDATE, report_only=REPORT_ONLY, delta_min=DELTA_MIN, ci95_lower_min=LOWER_MIN,
+                             standalone_native_delta_min=STANDALONE_MIN, public_fallback=False,
+                             proxy_supports=reports[CANDIDATE]['proxy_supports'],
+                             proxy_warning=reports[CANDIDATE]['proxy_warning']),
                proxy=dict(parent='three public LoRA members, label-free OOF fold mapping, T=1.75',
                           native_share=X.NATIVE_SHARE, sinkhorn=X.SINKHORN, target_mix=X.TARGET_MIX,
-                          group_max=X.GROUP_MAX, draws=X.DRAWS, public_proxy_ba=reports and next(iter(reports.values()))['base_ba']),
+                          group_max=X.GROUP_MAX, draws=X.DRAWS, public_proxy_ba=reports[CANDIDATE]['base_ba']),
                candidates=reports, missing_families=missing, targets_payload_sha256=targets_meta['payload_sha256'],
                split='official train rows, every native output held out for its state (VALIDATION proxy, not hidden test)',
                hidden_test_evaluated=False)

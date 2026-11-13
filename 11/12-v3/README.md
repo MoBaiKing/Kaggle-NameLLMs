@@ -12,7 +12,7 @@ v3 位于独立目录 `11/12-v3/`，不修改 11/11、11/12、11/12-v2 的代码
 
 ## v3 做了什么
 
-**部署（`build_submission.py`）**：固定的公开 0.684 Notebook 只替换五个 native 折权重文件。`infer.py` 与公开版逐字节相同（构建时断言只有 setup cell 改变）：几何融合、每折 Sinkhorn 后平均、失败时回退公开结果都保持原样；没有显式投票，也不改混合方式。权重文件在 Notebook 内先校验 SHA256 和张量形状，校准沿用公开文件。
+**部署（`build_submission.py`）**：固定的公开 0.684 Notebook，替换五个 native 折权重文件。融合（几何混合、每折 Sinkhorn 后平均）和其他所有成员不变；没有显式投票，也不改混合方式。`infer.py` 唯一改动是两处 `NATIVE SKIPPED` 回退改为报错：我们的 native 没跑成时，宁可这次运行失败，也不悄悄变成公开集成的结果。构建时断言 Notebook 只有 setup cell 和这两行不同，并要求每个折文件都不同于公开权重。权重在 Notebook 内先校验 SHA256 和张量形状，校准沿用公开文件。
 
 **训练目标（`objective_v3.py`、`train_v3.py`）**：
 
@@ -28,11 +28,11 @@ w_r     = class_balance(y_r) · (ε + (1−ε)(1 − p_oof(r)))                 
 - LoRA 学习率 1e-5，heads/norms 1e-4，前 10% 线性 warm-up，然后余弦衰减到 0；1 个 epoch，全局 batch 16 条文本，label smoothing 0.05，KL β=0.05，梯度裁剪 1.0。所有窗口按 token 加权聚合，公开校准冻结，dropout 关闭。
 - 训练结束同时导出续训权重（α=1）和 **WiSE-FT** 插值 `0.5·公开 + 0.5·续训`（`wise.py`）。部署候选预先固定为 α=0.5，α=1 只做报告。
 
-**验证门槛（`decide_v3.py`、`proxy_v3.py`）**：2,699 条官方训练行，每行用没见过它的折模型打分，按 0.684 Notebook 的规则融合（`decide_scores` 逐字取自固定的 `vendor/infer.py`，测试会比对）。候选与同一规则下的公开 native 配对比较，按 prompt 做 bootstrap。
+**验证证据（`decide_v3.py`、`proxy_v3.py`）**：2,699 条官方训练行，每行用没见过它的折模型打分，按 0.684 Notebook 的规则融合（`decide_scores` 逐字取自固定的 `vendor/infer.py`，测试会比对）。候选与同一规则下的公开 native 配对比较，按 prompt 做 bootstrap。
 
-- 采用顺序（训练前固定）：`v3_wise050` → 方案 A 回退 `v2_wise050` → `v2_full` → `public_only`。
-- 通过条件：ΔBA > 0，95% 下界 > −0.30，五折全部通过一致性检查，native 单独 BA 下降不超过 0.50（防止过拟合三成员代理 parent；它不是完整公开集成）。
-- 同时报告敏感性（parent T=1、分组 ≤1/≤3、无 Sinkhorn）和逐折 Δ，只作参考。
+- **没有公开兜底**：不会提交未改动的公开 Notebook。提交候选在训练前固定为我们的 `v3_wise050`；五折都训练完并通过一致性检查，decision 就是它，否则视为未完成，不构建。
+- 代理数字作为证据附上：`proxy_supports` = ΔBA > 0、95% 下界 > −0.30、native 单独 BA 下降不超过 0.50；95% 上界 < 0 时 `proxy_warning` 提示明显有害，由你决定是否提交。
+- 同时报告 `v3_full`、可选的 v2 权重对照（`--v2-runs`，只比较不提交）、敏感性（parent T=1、分组 ≤1/≤3、无 Sinkhorn）和逐折 Δ。
 
 代理只是官方训练集上的验证，不是隐藏测试，也不是公榜。同一 Notebook 重复提交在 LB 上约有 ±0.009 的波动，0.01 以内的变化无法确认。
 
@@ -49,9 +49,9 @@ python scripts/run.py --gpus 0,1,2,3 --v2-runs ../12-v2/runs_grpo
 
 - 第一步在 CPU 上生成 `cache/oof_targets.npz`，只读已有 OOF，不跑模型。已存在时自动 `--check`，输入哈希不符就停止。本机生成的 payload SHA256 记录在 `artifacts/verification.json`，服务器重建后可以对照。
 - 每折先做 v3 续训，结束后立即四卡 native GPU 验证。`--minutes`（默认 90）是每折的保存/暂停窗口：到时保存断点并以 75 退出，用同一条命令恢复，已完成的折和验证会核验后复用。
-- `--v2-runs` 可选：有已完成的 v2 权重时，生成方案 A 的回退候选（不修改 v2 目录）并做 GPU 验证。没有就只评估 v3。
+- `--v2-runs` 可选：有已完成的 v2 权重时，在同一代理下评估作对照（不修改 v2 目录，不会成为提交候选，多花 5 次 GPU 验证）。
 - smoke 用独立的 `runs_v3_smoke/`，fold0、2 个 batch、48 行验证，不能当正式结果。
-- 最后 `runs_v3/decision.json` 给出决定和全部对照。
+- 最后 `runs_v3/decision.json` 给出提交候选和全部验证证据。
 
 ## 构建与提交
 
@@ -61,7 +61,7 @@ python scripts/publish.py
 python scripts/publish.py --submit   # 只在明确同意后执行一次
 ```
 
-`decision` 为 `public_only` 时不构建，结论就是保持公开 0.684 Notebook。构建产物：私有 Notebook `YOUR_KAGGLE_USERNAME/ntl-11-12-v3` 和数据集 `YOUR_KAGGLE_USERNAME/ntl-11-12-v3-native`。Kaggle 上 native 推理次数与 0.684 相同（五折），运行时间不变。
+只构建我们自己的 v3 权重，不存在公开版本的构建或提交。构建产物：私有 Notebook `YOUR_KAGGLE_USERNAME/ntl-11-12-v3` 和数据集 `YOUR_KAGGLE_USERNAME/ntl-11-12-v3-native`。Kaggle 上 native 推理次数与 0.684 相同（五折），运行时间不变。
 
 ## 检查（CPU，只用合成小模型或已有 OOF）
 
