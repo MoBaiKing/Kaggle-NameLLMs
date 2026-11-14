@@ -1,0 +1,65 @@
+{
+  "version": "5.1",
+  "seed": 42,
+  "scope": ["empirical_bayes_prompt_centering", "three_discriminative_8b_sibling_experts"],
+  "base": {"repo": "Qwen/Qwen3-Embedding-8B", "revision": "1d8ad4ca9b3dd8059ad90a75d4983776a23d44af"},
+  "pool": "https://www.kaggle.com/datasets/crtproduction/name-that-llm-open-pool",
+  "pool_snapshot": "v15, retrieved 2026-11-14, 226191 main rows, 10838 quarantined rows",
+  "pool_files": {
+    "ntl_open_pool.parquet": "5a3dc82288328abedf49b7dd5e866e5c69eb922f9d6008e6fd78cf5153c12332",
+    "gemini37_unverified.parquet": "8b338f9412d5db01686f021bf254834edc0d4b4bc7488db347c281ac45640b53"
+  },
+  "external": {
+    "class_cap": null, "balance": "cover_all_rows_repeat_minorities",
+    "exclude": ["normalized_official_text_overlap", "conflicting_duplicate_labels", "known_prompt_overlap", "routing_risk", "post_ruling_proxy_flag", "tfidf_official_prompt_similarity_ge_0.30"],
+    "calibration": "sha256(prompt) modulo 20 equals 0; all remaining prompts train experts",
+    "unverified_screen": {"independent_models": 3, "min_top1_votes": 2, "min_mean_probability": 0.8}
+  },
+  "eb": {
+    "max_external_rows_target": 60000, "min_topic_panels": 1000, "min_labels_per_panel": 4,
+    "projection_rank": 128, "ridge_grid": [0.001, 0.01, 0.1, 1.0], "tau_grid": [4.0, 16.0, 64.0],
+    "selection": "external prompt five-fold CV inside each frozen native fold; official outer prompt folds never select EB parameters",
+    "class_composition": "subtract external per-class mean then add balanced external mean before regression",
+    "runtime": "reuse exact qwen_groups.py E_q; n/(n+tau) observed + tau/(n+tau) predicted; singleton centered head enabled",
+    "temperatures_and_centered_weight": "public frozen calibration",
+    "gate": "native-alone sparse1-2 BA delta paired prompt-bootstrap 95% lower bound > 0"
+  },
+  "experts": {
+    "gemini": ["gemini-3.6-flash", "gemini-3.7-flash", "gemini-3.8-flash"],
+    "glm_claude": ["claude-fable-5", "glm-5.3", "glm-5.3-flash"],
+    "gpt_kimi": ["gpt-5.5", "gpt-5.6-luna", "gpt-5.6-sol", "gpt-5.6-terra", "kimi-k3"]
+  },
+  "training": {
+    "external_epochs": 1, "official_epochs": 2, "lora_rank": 16, "lora_alpha": 32,
+    "lora_dropout": 0.05, "external_lr": 0.0001, "official_lr": 0.00002, "head_lr_multiplier": 5,
+    "micro_batch": 2, "gradient_accumulation": 16, "max_tokens": 512,
+    "optimizer": "AdamW", "weight_decay": 0.01, "clip_grad_norm": 1.0,
+    "checkpoint_selection": "fixed_last_epoch; no official validation search",
+    "official_exclusions": "five single-fold exclusions + ten pair exclusions for clean outer-fold SAGE training",
+    "init": "raw pinned embedding backbone + new discriminative LoRA/head; never continue native",
+    "evaluation": "immediately GPU-score final checkpoint on excluded official rows; no CPU large-model fallback"
+  },
+  "sage": {
+    "C": 0.3, "candidates": 4, "typography": false,
+    "features": ["relative_final_z", "rank2", "rank3", "rank4", "relative_discriminative_log_probability", "expert_candidate_available"],
+    "gate": "both top-2 candidates in same enabled disjoint expert group",
+    "validation_input": "native alone, one fixed sparse1-2 grouping seed2000; no parent mixture",
+    "deployment_input": "frozen full public stack after native share0.40",
+    "deployment_fold": "sha256(row_id) modulo5; one fold of at most one expert per row",
+    "kaggle_memory": "one worker shards each FP16 8B expert across both T4s; groups loaded sequentially, no unvalidated quantization",
+    "acceptance": "expert group OOF accuracy > native restricted-group accuracy AND post-SAGE family-conditional delta 95% lower bound >0; combined accepted experts must also pass"
+  },
+  "validation": {
+    "scope": "official train prompt OOF validation; hidden test not evaluated locally",
+    "eb_grouping_draws": 10, "group_max": 2, "bootstrap_draws": 4000,
+    "confidence": 0.95, "resampling_unit": "prompt", "proxy_used_for_acceptance": false,
+    "family_conditional": "exact correct / family correct, both numerator and denominator resampled",
+    "historical_reference_only": {"family_accuracy_percent": 86.7, "exact_accuracy_percent": 66.1, "conditional_percent": 76.3},
+    "public_native_second_order": "Public native OOF states are frozen supplied assets. New expert pair exclusions remove new expert-to-SAGE outer-label paths; this does not reconstruct public native pretraining as nested models."
+  },
+  "gpu_layout": "one GPU for each expert group; fourth GPU for frozen EB collection; fewer authorized idle GPUs may fill dynamically",
+  "build": "only individually accepted components; neither passes => no build or submission",
+  "excluded_directions": ["native_official_continuation", "small_generative_experts", "logit_rewrite", "reinforcement_learning"],
+  "api_budget": "never spend automatically; ask user only if additional generated data is needed",
+  "leaderboard": "optional auxiliary calibration after v5.0 score arrives; never blocks implementation or changes gates"
+}

@@ -4,7 +4,7 @@
   "diagnosed_submission": {
     "ref": 58283158,
     "public_lb": 0.669,
-    "baseline_public_only": 0.684
+    "public_reference_score": 0.684
   },
   "initialization": "pinned public native fold states; no v1/v2 student state is loaded",
   "seed": 42,
@@ -87,7 +87,7 @@
     {
       "date": "2026-11-12",
       "before_training": true,
-      "change": "user: never submit the public version, no fallback submissions; removed public_only and the v2 fallback chain, decision is always our v3_wise050 with proxy evidence; native skip fallbacks raise"
+      "change": "user: never submit the public version, no fallback submissions; removed the v2 fallback chain, decision is always our v3_wise050 with proxy evidence; native skip fallbacks raise"
     }
   ]
 }

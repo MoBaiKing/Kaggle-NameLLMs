@@ -1,0 +1,39 @@
+{
+  "payload_sha256": "337a8ea56063e2cf9f913d53be1092ab3111026bcc3d6d7752ed4f0c94b3f36d",
+  "official_sha256": "40a22ce8d88c5f46feb4637a099db815bef5f713ffe53e89dbe1b7b21de77707",
+  "source_sha256": {
+    "ntl_open_pool.parquet": "5a3dc82288328abedf49b7dd5e866e5c69eb922f9d6008e6fd78cf5153c12332",
+    "gemini37_unverified.parquet": "8b338f9412d5db01686f021bf254834edc0d4b4bc7488db347c281ac45640b53"
+  },
+  "code_sha256": "6f19356659929dfa3f9dff82830891bd3c5183a08dac1a9016bdcd8dbcd95c5d",
+  "cap_per_class": null,
+  "rows": 203219,
+  "prompts": 35310,
+  "screened_added": 0,
+  "quarantined": 10838,
+  "per_class": {
+    "claude-fable-5": 12560,
+    "claude-opus-4-6": 9487,
+    "claude-opus-4-8": 10521,
+    "claude-opus-5": 8086,
+    "claude-sonnet-5": 11306,
+    "gemini-3.1-pro-preview": 9518,
+    "gemini-3.6-flash": 16721,
+    "gemini-3.7-flash": 3535,
+    "gemini-3.8-flash": 21097,
+    "glm-5.3": 11722,
+    "glm-5.3-flash": 12060,
+    "gpt-5.5": 11374,
+    "gpt-5.6-luna": 15353,
+    "gpt-5.6-sol": 12511,
+    "gpt-5.6-terra": 13218,
+    "gpt-6-astra": 10067,
+    "kimi-k3": 9585,
+    "qwen3.8-max": 4498
+  },
+  "screen_sha256": null,
+  "scope": "CPU public-data audit only; no GPU training, OOF acceptance or hidden-test inference executed",
+  "unverified_screening": "pending independent GPU model outputs; excluded from current training data",
+  "eb_selected_rows": 60017,
+  "eb_selected_panels": 4672
+}

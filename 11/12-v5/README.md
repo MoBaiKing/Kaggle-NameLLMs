@@ -1,4 +1,6 @@
-# 11/12-v5 — 从神经元级改写开始
+# 11/12-v5 — v5.1 提示中心化与兄弟专家
+
+当前版本为 **v5.1**：[代码与运行说明](V51.md) · [四卡服务器提示词](RUN_ON_SERVER_PROMPT.md) · [冻结计划](artifacts/v51_plan.json)。下面保留 v5.0 的历史记录，其构建命令只适用于 v5.0。
 
 ## v5.0 SNR：native 专家输出神经元的兄弟结构改写（已提交 58328855）
 
@@ -38,6 +40,6 @@ python scripts/build_submission.py --username YOUR_KAGGLE_USERNAME
 
 Notebook：固定 0.684 + setup cell 内合并头权重（公开折文件先对清单校验 SHA256，头文件也校验 SHA256，其余张量逐位不变）+ infer.py 两处 native 跳过改为删除输出并报错（没有公开兜底）。上传只有 5 个头文件（共 24 MB）。
 
-## 下一步（v5.1 起）
+## v5.1：提示中心化与三组判别式专家
 
-logit 级改写已经证明没有信息增量。要真正改写"有问题的神经元"，必须作用在特征上：先在 GPU 上提取 native 的 32768 维多深度特征，再把训练集 prompt 话题方向从两个头的输入中投影掉，W′ = W(I − P)（INLP, Ravfogel et al., ACL 2020；测试 prompt 全部没见过，话题方向是伪相关）。用同样的嵌套方式验证。
+v2 到 v5.0 的改动没有给集成带来有效新信息。v5.1 只实现下面两个组件；v5.0 的代码、提交与历史证据保留。入口、协议、测试和服务器提示词见 [V51.md](V51.md) 与 [RUN_ON_SERVER_PROMPT.md](RUN_ON_SERVER_PROMPT.md)。不等待 v5.0 出分，不执行上面旧版本的训练或构建命令来运行 v5.1。
