@@ -1,0 +1,37 @@
+{
+  "scope": "CPU protocol / synthetic tests and public-data audit only",
+  "recorded_at": "2026-11-14T03:30:11.697202+00:00",
+  "unit_tests": {
+    "passed": 27,
+    "failed": 0,
+    "command": "CUDA_VISIBLE_DEVICES='' OMP_NUM_THREADS=1 python -m unittest discover -s tests -p 'test_v51_*.py' -v"
+  },
+  "public_calibration_max_abs": 0.0,
+  "launcher_dry_run": "passed; three single-GPU expert commands plus one single-GPU collector",
+  "python_compilation": "passed",
+  "gpu_smoke": "NOT_RUN",
+  "real_training": "NOT_RUN",
+  "hidden_test": "NOT_RUN",
+  "accuracy_uplift": "UNPROVEN",
+  "unverified_gemini_screening": "NOT_RUN; 10838 rows quarantined",
+  "public_data_audit_sha256": "a7a016072e21a11fa2a0e44f4838000b2d165f7845dfb4ef77bab89122741b66",
+  "files_sha256": {
+    "scripts/build_v51.py": "b0e245573993951193fb1f68fd198b6631e54445981ec5a7fb7e0b267da1d602",
+    "scripts/publish_v51.py": "2fd52f2b41cb042e0832da51ef80f121e4bdd3a375709a3ac84b465f58ab4496",
+    "scripts/run_v51.py": "5fc694ff8c7be050922fbb6ded7f2660b4828efc359be35c0012470982447494",
+    "scripts/v51_collect.py": "ab917b5d06241c76111156e005830cbe33043d8081919b0ae9580872f19079cd",
+    "scripts/v51_common.py": "7e70d5958ab5303457b0a9e8c61d7c3430092cf36faec815d68109a92a4053f3",
+    "scripts/v51_data.py": "6f19356659929dfa3f9dff82830891bd3c5183a08dac1a9016bdcd8dbcd95c5d",
+    "scripts/v51_eb.py": "c7a89f33b11e01732b6e848f515855450aef00e5afcc953f3fc42a0e813eac98",
+    "scripts/v51_evaluate.py": "78862dad29c65860e1d0b7753bc4c8e2859b40c4f8f8ccf5cacfdfa73fdaf62d",
+    "scripts/v51_expert.py": "f0b29d94c14d6b4e0934b84a8430406d3552ac6bc478212fe7bc02973cdca8aa",
+    "scripts/v51_proxy_aux.py": "6efb38a473c0a60b0983a940bdbd91a27bcdd5fd5f9392e77a818a9972cb07bf",
+    "scripts/v51_runtime.py": "200056720b0b43fb17cf08ebf6858cbd7a7d87a78e55bb85074a39c7fc711568",
+    "scripts/v51_sage.py": "09e948c35801ffda4db72b4f9c5777c345a7fa533a6ded0f0d7091c7515a59d8",
+    "scripts/v51_screen.py": "f5a504650cc08ecf0d2d22d313894ebf6f1f1af047c3fff5cde250dbc0b74b78",
+    "scripts/v51_screen_infer.py": "3365951c14fcf03f58bf231e29217c77de1777700191aa8766146659eabf6d40",
+    "scripts/v51_train.py": "c725b3672b1033da2ecbaf0e70c98ed84f145a5eccf271e708c49fcda691f218",
+    "tests/test_v51_notebook.py": "626c77a87ec6ce17303744c10da57a29600b9bbb6ea5eea5f6fbd82b23d190c8",
+    "tests/test_v51_protocol.py": "93df713f489a7dbdde856a4fcf3adba5e9f00ae935bf688d95542ae34f7c3bfc"
+  }
+}

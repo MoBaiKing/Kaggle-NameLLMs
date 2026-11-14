@@ -1,0 +1,12 @@
+{
+  "purpose": "optional auxiliary proxy recalibration; never changes v5.1 acceptance",
+  "scale": "0_to_1",
+  "observations": [
+    {"run": "native_share_0.30", "native_share": 0.30, "leaderboard": null, "proxy": null},
+    {"run": "native_share_0.40", "native_share": 0.40, "leaderboard": 0.684, "proxy": null},
+    {"run": "native_share_0.50", "native_share": 0.50, "leaderboard": null, "proxy": null},
+    {"run": "v2", "leaderboard": null, "proxy": null},
+    {"run": "v4", "leaderboard": null, "proxy": null},
+    {"run": "v5.0", "leaderboard": null, "proxy": null}
+  ]
+}

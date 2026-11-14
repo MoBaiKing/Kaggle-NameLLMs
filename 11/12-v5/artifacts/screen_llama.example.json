@@ -1,0 +1,6 @@
+{
+  "name": "ll8v5", "type": "l24", "path": "/ABSOLUTE/PUBLIC_LLAMA8_BASE",
+  "adapters": ["/ABSOLUTE/LL8V5_FOLD0", "/ABSOLUTE/LL8V5_FOLD1", "/ABSOLUTE/LL8V5_FOLD2", "/ABSOLUTE/LL8V5_FOLD3", "/ABSOLUTE/LL8V5_FOLD4"],
+  "keep": 24, "layers": [2, 4, 6, 8, 12, 16, 20, 24], "max_len": 384,
+  "w": 1.0, "bs": 4, "twin": 0.0
+}

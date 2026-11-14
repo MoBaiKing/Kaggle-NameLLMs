@@ -1,0 +1,6 @@
+{
+  "name": "q14v5", "type": "l24", "path": "/ABSOLUTE/PUBLIC_QWEN14_BASE",
+  "adapters": ["/ABSOLUTE/Q14V5_FOLD0", "/ABSOLUTE/Q14V5_FOLD1", "/ABSOLUTE/Q14V5_FOLD2", "/ABSOLUTE/Q14V5_FOLD3", "/ABSOLUTE/Q14V5_FOLD4"],
+  "keep": 27, "layers": [2, 4, 6, 8, 12, 16, 20, 24], "max_len": 384,
+  "w": 1.0, "bs": 4, "twin": 0.0, "gauss": 0.0
+}
