@@ -1,0 +1,53 @@
+{
+  "version": "v6_native_data_soup",
+  "seed_soup": [
+    42,
+    43,
+    44
+  ],
+  "world_size": 4,
+  "public_fallback": false,
+  "data": {
+    "source": "crtproduction/name-that-llm-open-pool v15 ntl_open_pool.parquet",
+    "sha256": "5a3dc82288328abedf49b7dd5e866e5c69eb922f9d6008e6fd78cf5153c12332",
+    "rows": 226191,
+    "kept": 219631,
+    "stream_payload_sha256_built_here": "ce7f0e08fa714bdb9e5aba6a6d087e10d3254465e8acd7e98e7a210c6f7d24bf",
+    "rules": "w = clip(match_weight, .05, 10) x fidelity(model, gen_reasoning) for kimi-k3/glm-5.3/qwen3.8-max (floor .3); drop max_sim_train_prompt >= .25; label-balanced sampler"
+  },
+  "architecture": "public native layout: Qwen3-Embedding-8B, depths 3..36, LoRA r16 alpha 32 all projections, plain + centred heads",
+  "pretrain": {
+    "shared_across_folds": true,
+    "data": "external only",
+    "presentations": 400000,
+    "batch": 64,
+    "lr_adapter": 0.0002,
+    "lr_head": 0.0005,
+    "smoothing": 0.05,
+    "centred": 0.0,
+    "lora_dropout": 0.05,
+    "head_dropout": 0.1,
+    "weight_decay": 0.01,
+    "schedule": "warm-up 10% + cosine"
+  },
+  "finetune": {
+    "per_fold_seeds": [
+      42,
+      43,
+      44
+    ],
+    "rows": "fold training split minus 18 inner calibration prompts",
+    "cells": "4 complete prompt groups",
+    "epochs": 2,
+    "lr_adapter": 5e-05,
+    "lr_head": 0.0005,
+    "smoothing": 0.05,
+    "centred": 0.5
+  },
+  "soup": "uniform mean of the three seed states per fold; calibration fitted on inner rows (public fields) by 11/12 evaluate.py",
+  "gate": "native-alone BA vs public native author OOF on all 2,699 rows: groups<=2 delta > 0 and 95% lower > 0; singletons delta >= 0; five folds parity",
+  "why_this_gate": "native-alone OOF BA called the LB direction for v4 A1 and v5.0 SNR; the 3-member ensemble proxy did not",
+  "hidden_test_labels_used": false,
+  "real_gpu_training_launched": false,
+  "kaggle_submission_sent": false
+}

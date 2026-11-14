@@ -6,3 +6,4 @@
 - [GRPO v2：四卡枚举目标与多强模型软投票](11/12-v2/README.md)
 - [11/12-v3：OOF 加权集成感知续训与部署一致的验证门槛](11/12-v3/README.md)
 - [11/12-v4：A1 + 公开集成 + A2 + B（锚定代理、CCL-Gen、SAGE）](11/12-v4/README.md)
+- [11/12-v6：金牌套路——Open Pool v15 数据重训 native + 种子汤 + 对齐公榜的门槛](11/12-v6/README.md)

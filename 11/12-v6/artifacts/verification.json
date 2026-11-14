@@ -1,0 +1,21 @@
+{
+  "scope": "CPU only: tiny random Qwen3 36-layer model on four Gloo ranks, synthetic official/pool rows, pinned official-train OOF, pinned public notebook; no 8B model was run",
+  "passed_tests": {
+    "test_data_v6.py": "prompt-near rows dropped; w = clipped match_weight x fidelity factor (floored); official overlap refused",
+    "test_train_v6.py": "pretrain pause/resume == uninterrupted (exact); finetune two seeds; soup = exact mean; 524-tensor public export; 11/12-evaluate-compatible done.json; reuse; protocol guard",
+    "test_decide_v6.py": "identical -> not_ready; helpful -> v6; failed gate not built; notebook differs only in setup cell + 2 infer.py lines; setup patch offline; tampered fold rejected; parity failure -> not_ready"
+  },
+  "launcher_dry_run_commands": 28,
+  "four_gpu_smoke": "NOT_RUN",
+  "training": "NOT_RUN",
+  "kaggle_submission": "NOT_SENT",
+  "code_sha256": {
+    "scripts/build_submission.py": "db39e5e813a946a3295c53128b4ca0b1f95a1e59e3d93b463112706d56181299",
+    "scripts/data_v6.py": "a58c9ec216e40aa7e9234a1c04784ddcd17569d3cc6c81078e72607c3305a3bd",
+    "scripts/decide_v6.py": "8b93ab85a337ba2a205aa0e6affd8a363492646dcf22aa00078b3c2eb60276b9",
+    "scripts/publish.py": "323703ab4f985f7446bbb70f1c30327085f4bc0c395c0254beae5a5807d29536",
+    "scripts/run.py": "9bb0d86c5c1948a4f11932c0077b647c873c99e1915258642f68e02ffa8cd9e9",
+    "scripts/shared.py": "ee8c70a7b13494c0f9c92a87d4acf932e6478f7373a4e6623258203340b7da17",
+    "scripts/train_v6.py": "327748c69029e5ea350d894ee55d9f1b3bdf3b07edafd133e4c5cd961f154da3"
+  }
+}
