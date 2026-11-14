@@ -1,0 +1,483 @@
+{
+  "method": "v51_eb_sibling_experts",
+  "enabled": {
+    "eb": false,
+    "experts": [],
+    "build": false
+  },
+  "eb": {
+    "base": 65.91262739249318,
+    "candidate": 65.5977877206065,
+    "delta": -0.3148396718866686,
+    "ci95": [
+      -0.7703703703703657,
+      0.12592592592592933
+    ],
+    "bootstrap_draws": 4000,
+    "unit": "percentage_points",
+    "metric": "ba"
+  },
+  "groups": {
+    "gemini": {
+      "within_native": 65.55555555555556,
+      "within_expert": 59.333333333333336,
+      "within_delta": -6.222222222222218,
+      "family": {
+        "base": 76.4856776400171,
+        "candidate": 76.61393758016246,
+        "delta": 0.1282599401453588,
+        "ci95": [
+          -0.34543434384162797,
+          0.5972759974887104
+        ],
+        "bootstrap_draws": 4000,
+        "unit": "percentage_points",
+        "metric": "conditional"
+      },
+      "outer_weights": {
+        "0": [
+          1.4530850350855686,
+          -0.11829294314147998,
+          0.13931738331149157,
+          -0.3397625499724974,
+          0.21178271054586692,
+          0.7587099449556379
+        ],
+        "1": [
+          1.3932639148219925,
+          -0.00587726868980476,
+          0.03724742897016343,
+          -0.29229708996893594,
+          0.20100653688505618,
+          0.5446163119122565
+        ],
+        "2": [
+          1.3523523024498294,
+          -0.044815461090608404,
+          -0.09287501273077892,
+          -0.36586388293501804,
+          0.24695740331569227,
+          0.6897030007011193
+        ],
+        "3": [
+          1.4702264723137537,
+          -0.14250046061414307,
+          0.18960216771696783,
+          -0.322826652904609,
+          0.28865826010883616,
+          0.7395961814891984
+        ],
+        "4": [
+          1.457053411521377,
+          -0.03922595737155965,
+          0.0768738926984531,
+          -0.40717756708677705,
+          0.2302112970644185,
+          0.495836241010476
+        ]
+      }
+    },
+    "glm_claude": {
+      "within_native": 50.33407572383074,
+      "within_expert": 40.75723830734967,
+      "within_delta": -9.576837416481077,
+      "family": {
+        "base": 76.4856776400171,
+        "candidate": 76.37997432605906,
+        "delta": -0.10570331395804988,
+        "ci95": [
+          -0.41673836379556545,
+          0.205037385495247
+        ],
+        "bootstrap_draws": 4000,
+        "unit": "percentage_points",
+        "metric": "conditional"
+      },
+      "outer_weights": {
+        "0": [
+          1.2955906095567324,
+          0.11818473169697206,
+          0.33830149591387676,
+          -0.1364911916217949,
+          0.04987559642817816,
+          0.43077840944335566
+        ],
+        "1": [
+          1.452421286854752,
+          0.0889900773542886,
+          0.3923787677767011,
+          -0.18681862605233454,
+          -0.03513853529444419,
+          0.5547014501361597
+        ],
+        "2": [
+          1.3286017809326292,
+          -0.008730765633369494,
+          0.17366440063689553,
+          -0.2534599994074421,
+          0.06002968470217589,
+          0.281354850997957
+        ],
+        "3": [
+          1.4264858506920193,
+          -0.17193080625714618,
+          0.3126340231393547,
+          -0.1202242721680853,
+          -0.05986505588726927,
+          0.2997691959740731
+        ],
+        "4": [
+          1.192719117068987,
+          -0.11773062884323682,
+          0.202768325133227,
+          -0.05752687825873324,
+          0.04327839647560571,
+          0.6812348332251289
+        ]
+      }
+    },
+    "gpt_kimi": {
+      "within_native": 69.46666666666667,
+      "within_expert": 62.133333333333326,
+      "within_delta": -7.333333333333336,
+      "family": {
+        "base": 76.4856776400171,
+        "candidate": 76.49828767123287,
+        "delta": 0.012610031215776196,
+        "ci95": [
+          -0.2643982311675619,
+          0.28596648503188493
+        ],
+        "bootstrap_draws": 4000,
+        "unit": "percentage_points",
+        "metric": "conditional"
+      },
+      "outer_weights": {
+        "0": [
+          1.67526908851307,
+          -0.08460099584104412,
+          0.08204510194842751,
+          -0.11592560215997814,
+          0.12635372353674423,
+          0.4565730751164743
+        ],
+        "1": [
+          1.5770891664494275,
+          -0.05445288662869531,
+          -0.08846608945253866,
+          -0.22373672852955082,
+          0.1275572295587065,
+          0.2985523046755317
+        ],
+        "2": [
+          1.4715382573106852,
+          -0.05618692880031013,
+          -0.003451042282825071,
+          -0.5176352185152145,
+          0.150596586008173,
+          0.31984714096765504
+        ],
+        "3": [
+          1.4060301182632364,
+          -0.023104516229220547,
+          -0.04450355328900068,
+          -0.46757628622068903,
+          0.17613873511322045,
+          0.46389170469254754
+        ],
+        "4": [
+          1.512863651370748,
+          -0.16732986666792557,
+          0.12325520925264195,
+          -0.3325064503113639,
+          0.16702396003004305,
+          0.5728736148371745
+        ]
+      }
+    }
+  },
+  "combined": null,
+  "eb_external_selection": [
+    {
+      "alpha": 0.001,
+      "tau": 4.0,
+      "mse": 0.25557074213414793,
+      "selection": "external_prompt_folds_only"
+    },
+    {
+      "alpha": 0.001,
+      "tau": 4.0,
+      "mse": 0.25529856075968693,
+      "selection": "external_prompt_folds_only"
+    },
+    {
+      "alpha": 0.001,
+      "tau": 4.0,
+      "mse": 0.2631525888856843,
+      "selection": "external_prompt_folds_only"
+    },
+    {
+      "alpha": 0.001,
+      "tau": 4.0,
+      "mse": 0.2524741806869584,
+      "selection": "external_prompt_folds_only"
+    },
+    {
+      "alpha": 0.001,
+      "tau": 4.0,
+      "mse": 0.25439905621818637,
+      "selection": "external_prompt_folds_only"
+    }
+  ],
+  "grouping_draws": [
+    {
+      "seed": 2000,
+      "base_ba": 66.27591349739002,
+      "eb_ba": 65.60924683072335
+    },
+    {
+      "seed": 2001,
+      "base_ba": 66.20283370618941,
+      "eb_ba": 65.72060651255282
+    },
+    {
+      "seed": 2002,
+      "base_ba": 65.46085011185681,
+      "eb_ba": 65.5346756152125
+    },
+    {
+      "seed": 2003,
+      "base_ba": 65.86602038279891,
+      "eb_ba": 65.34924185930898
+    },
+    {
+      "seed": 2004,
+      "base_ba": 66.01665423813076,
+      "eb_ba": 65.64628386776037
+    },
+    {
+      "seed": 2005,
+      "base_ba": 66.86925180213771,
+      "eb_ba": 65.75689783743476
+    },
+    {
+      "seed": 2006,
+      "base_ba": 65.34998757146408,
+      "eb_ba": 65.86800894854586
+    },
+    {
+      "seed": 2007,
+      "base_ba": 65.6835694755158,
+      "eb_ba": 65.3124533929903
+    },
+    {
+      "seed": 2008,
+      "base_ba": 65.53417847377578,
+      "eb_ba": 65.60850111856821
+    },
+    {
+      "seed": 2009,
+      "base_ba": 65.86701466567239,
+      "eb_ba": 65.57196122296793
+    }
+  ],
+  "native_parity_max_abs": 0.1315519934585916,
+  "base_family_conditional": 76.4856776400171,
+  "base_family_accuracy": 86.66172656539459,
+  "metric_scope": "official_train_prompt_OOF_validation_native_alone",
+  "hidden_test_evaluated": false,
+  "proxy_used_for_acceptance": false,
+  "artifacts": {
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/collect/features.npz": "762944ae9af455de365987104e7cdb5ab0196d06b419c28263cc0ff50a135826",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/collect/features.json": "978ad8e03a311456cc9710b011a156efd180993f0d2ac33930edf45f128a570c",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_0/scores.npz": "4bfcadf1d20c6b5953150b8393a894208cf745c51810df31f4f7e44de5a63f91",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_0/scores.json": "9603cf3c0d3a576a22df169319738d02d531b8b2a153d2e0d016fdb628383d8d",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_0/final.safetensors": "f5e292d6a81098f78e1b38e7dc174b5e08619bbcd6e70b4d7c49eaeef3a0efc6",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_0/complete.json": "9603cf3c0d3a576a22df169319738d02d531b8b2a153d2e0d016fdb628383d8d",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_1/scores.npz": "7f9011d39e45b4bc5bf460553a02c1da9d6393ac1d6d554032a8a9fb33a84672",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_1/scores.json": "c92949aa7b54a17b7ecc4b76f087d92444712f8e13f4d762eaf6d50581ec5ee4",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_1/final.safetensors": "d1c5aabdb4ebd113988b035b9d5110ca0d89b8bd5b7795c3a522d4b3db9833b0",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_1/complete.json": "c92949aa7b54a17b7ecc4b76f087d92444712f8e13f4d762eaf6d50581ec5ee4",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_2/scores.npz": "b87a512fc373c0b7127fd7d0c485bf834378413986ccc8d29ba287bfe2592014",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_2/scores.json": "481129e479a1dca1a60db2f856c2f2ee793ac92f0f2bdb4b27b9f89c18c5e342",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_2/final.safetensors": "32c0ab459ffdd50fda008022d90db6c550b3620477ae71ab943b5be6ce43e77a",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_2/complete.json": "481129e479a1dca1a60db2f856c2f2ee793ac92f0f2bdb4b27b9f89c18c5e342",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_3/scores.npz": "c1e54acef4e8a893f27052a8f1205822968edc40f9c53e2d209a3f476ba88493",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_3/scores.json": "88c50d1d073061cfa4a6d4f8cc0cd7da7db74c2a389df75f00db6f1e74ddd7a9",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_3/final.safetensors": "7168a15795b5419168b7a006ba5017ab0d3b422fc1f2e6b547777b71baa8ebdb",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_3/complete.json": "88c50d1d073061cfa4a6d4f8cc0cd7da7db74c2a389df75f00db6f1e74ddd7a9",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_4/scores.npz": "5d48034025c5cbc4fe9b533863998b84f6a9775b29dd4a0c4929f066a1d6244e",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_4/scores.json": "ec84436b417b2b37b4b21975906be4b0ac3e123953c5657c957c3b2893ce9b3b",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_4/final.safetensors": "45dfad0555da12bd10c456f699420e0a26f2aaa585a496fc2c024e47dc06e8f4",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_4/complete.json": "ec84436b417b2b37b4b21975906be4b0ac3e123953c5657c957c3b2893ce9b3b",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_0_1/scores.npz": "c0f063bdd06b48087dfc5c0a15aff9b4b1d5dfcec7bf4c286abb2dffa8afd77d",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_0_1/scores.json": "c50f060899beb7604503d71386860465ee4ba776a3415b743599ad7fd13c86f5",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_0_1/final.safetensors": "82de2d46c35fd59d8adfc6ccf5c8a73996edcf6ad0d639d04f7759ff6e57759a",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_0_1/complete.json": "c50f060899beb7604503d71386860465ee4ba776a3415b743599ad7fd13c86f5",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_0_2/scores.npz": "0e937edf25bba72d68edbb2ac68119876ae90dab17658eb1b561923bba52cf8f",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_0_2/scores.json": "7d1e5d254c83646b2aa8494b94c1fcf34bc08be43ad6e2b602a013f69cb70839",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_0_2/final.safetensors": "72870ad4c75497602b0d4eeaf69768d81ba51ef77e8f6ae32718d2637d5ecb42",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_0_2/complete.json": "7d1e5d254c83646b2aa8494b94c1fcf34bc08be43ad6e2b602a013f69cb70839",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_0_3/scores.npz": "27702168c998202deb33bbada68cee9ac8b5efb89d902376b9cec79338239d1a",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_0_3/scores.json": "e4eb658425b6844d079dd5d93f9d0a1271d347a0c2b97d5966747b7c03074814",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_0_3/final.safetensors": "6e641118e01105f38cc2819378ada217d2c3fc5898c7dfb9d980e19011f810b8",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_0_3/complete.json": "e4eb658425b6844d079dd5d93f9d0a1271d347a0c2b97d5966747b7c03074814",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_0_4/scores.npz": "4e054f9d4814050fba2d885cc9fdba9cc39b1aa92dd1af113a34b993aaa9d380",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_0_4/scores.json": "e6390d278a012d5b3852e3b4091ed5ed94b61b43f4ebbf60b31c722a529b4489",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_0_4/final.safetensors": "b6963d89d8f583b50457dcf14cdc1e8bf27c43d8205ccfc84c05ba328a170196",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_0_4/complete.json": "e6390d278a012d5b3852e3b4091ed5ed94b61b43f4ebbf60b31c722a529b4489",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_1_2/scores.npz": "d27694df090e0d5849e4431751a277ce6b1c7d88a51787284e4851ecf8763b91",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_1_2/scores.json": "0c39e68e116e2d0c54546f885ca5f6c65e86720fa97e5caa70861d585876d9da",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_1_2/final.safetensors": "cf91dd412078667bd8894948d0739fc9314c37d6374226f2074f65032dcc3b47",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_1_2/complete.json": "0c39e68e116e2d0c54546f885ca5f6c65e86720fa97e5caa70861d585876d9da",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_1_3/scores.npz": "7a3feaccc95ed4f167ef4289a83c7395576ba06557cc6615ecc004226c0d434c",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_1_3/scores.json": "88a4a3977c175e6c6b734cebec4bb8972dc66c0bf1e30750b597ac6fb2e60f65",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_1_3/final.safetensors": "dac45ee71d82510f5501975c79c4f46a8c4d3cfad034efacc25cc6de9d0d634b",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_1_3/complete.json": "88a4a3977c175e6c6b734cebec4bb8972dc66c0bf1e30750b597ac6fb2e60f65",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_1_4/scores.npz": "7b11ffff2ba9f465c3f37da555856d3bff608e113cf610217b219c77cf0dd22e",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_1_4/scores.json": "eeb7709779b890a7eddbe05d2831d51988799a9e5c8dc7d2f2ab677d94521241",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_1_4/final.safetensors": "bb810907fc7e7348a6c80e54068e4ae8ef15d62db8ac33fbe0ff72e5496f24e1",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_1_4/complete.json": "eeb7709779b890a7eddbe05d2831d51988799a9e5c8dc7d2f2ab677d94521241",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_2_3/scores.npz": "88d5d32bd769882ecfe8da541423b7917e5d1ddf609419219249862938cd6ac5",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_2_3/scores.json": "7b4ace974349636e381cf98f11e38b133926c0e4e3f775444e2bd4dcffd5f5a1",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_2_3/final.safetensors": "8410b04ce9f77344cbfc9c096b2ae5b34a51d18a3b3d4b2589deb00eda21d540",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_2_3/complete.json": "7b4ace974349636e381cf98f11e38b133926c0e4e3f775444e2bd4dcffd5f5a1",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_2_4/scores.npz": "ecdea7d3a1ff176f9ca2d616b397765dc472e52f55609aa9f59ba8cc5d8c2502",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_2_4/scores.json": "5377033d7750180ba1af70eefe2f9db7ac6e751bfe57dddc491e870798451d2b",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_2_4/final.safetensors": "14037c3b833b0f2f83a7e8f18e66d4cab2d530947e477d0d1e5cc48175c09d00",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_2_4/complete.json": "5377033d7750180ba1af70eefe2f9db7ac6e751bfe57dddc491e870798451d2b",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_3_4/scores.npz": "9a8f21531f231c4f08cb4598158a6ecfc1d48575f6ccf6473f7f3cb3c775e33e",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_3_4/scores.json": "3c3454b698fcb0fc7e7a6a116bd1c7df42cc5547bf516dd14752207a12f3038e",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_3_4/final.safetensors": "d86e56506f1efb4d8251b0747e66100d3cfed20ad26c9d0b0182def79f9df194",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/exclude_3_4/complete.json": "3c3454b698fcb0fc7e7a6a116bd1c7df42cc5547bf516dd14752207a12f3038e",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_0/scores.npz": "f1b25acace9cc9845d9e954c156f1403ad37cc08a0e43b577327ae4976e4e3fc",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_0/scores.json": "8490e286afb059efeadd0b0ee8a3f2dd96b109c0734ce1233ac6d77a4c8bd2d0",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_0/final.safetensors": "1e1ef04d41a2b7ed82d864a2a7901018e99a03739ebfa836d7152eddf908b8ec",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_0/complete.json": "8490e286afb059efeadd0b0ee8a3f2dd96b109c0734ce1233ac6d77a4c8bd2d0",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_1/scores.npz": "8ddfb861a86051cc3151b2c805b63d8fc56ca7dcd7596694bbebbbe6aebda25a",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_1/scores.json": "99b4b190910d5e24048887e9495b7868cc1dd53c7e413a77a807e9fbac4bc0f1",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_1/final.safetensors": "6457a595d9a9ae6b30ea9e29de4289a45ce0584175e98632e2dcaeba74a186d6",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_1/complete.json": "99b4b190910d5e24048887e9495b7868cc1dd53c7e413a77a807e9fbac4bc0f1",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_2/scores.npz": "283b9aa961375c4e071c2e5dc8f5b41a4144c760a1e77598c1720ecff63dd04a",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_2/scores.json": "17eadb23ac32ae126f2b37d8c5369683494109802d7ea144637ae496188dcdd4",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_2/final.safetensors": "f94719e718fec389cf47b09d4193fa3ed85788723171f23ab829df4cf303e6df",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_2/complete.json": "17eadb23ac32ae126f2b37d8c5369683494109802d7ea144637ae496188dcdd4",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_3/scores.npz": "84ed0d5bba05f0a3f833baa92d452a24d42931364e70e784961482300c461844",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_3/scores.json": "e9e4a7e212d0177dd2bcc7534c1445649e713bf2faa745a35ef1a7f5f91b11d5",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_3/final.safetensors": "944dadcd5e783c33357af62321a68019aac1d5964acf74f26e50bbdb1387ddc9",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_3/complete.json": "e9e4a7e212d0177dd2bcc7534c1445649e713bf2faa745a35ef1a7f5f91b11d5",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_4/scores.npz": "b489cf26671925de321eba5232131a2e077633326418a24bd7ae5bb26263c98b",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_4/scores.json": "ca5ebc30c95665e2d4327025b530de9aae8607728221193aee92d5f1a3343cd7",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_4/final.safetensors": "93e474a1bd15e84481685fb00aa81abe12a6dda18532dbd658b809d6208c4f96",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_4/complete.json": "ca5ebc30c95665e2d4327025b530de9aae8607728221193aee92d5f1a3343cd7",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_0_1/scores.npz": "26267816b671c1e22be646726da7a600e0b7d3bc313815d6cd8a59fd4a94ef36",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_0_1/scores.json": "be0119128604e3ed17ff887b3dd195d6be7ed5453b34f0ae0ae0d3ef9c9cbcef",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_0_1/final.safetensors": "ed5023422f1e6215caa76f9f173f5bce194f48dbd93a05efbd7e36013c5a1ffb",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_0_1/complete.json": "be0119128604e3ed17ff887b3dd195d6be7ed5453b34f0ae0ae0d3ef9c9cbcef",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_0_2/scores.npz": "d5afd3c6407559390ae43bd79b798ae78bb6dc5568e47bac75d108cdfa6d0632",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_0_2/scores.json": "a3af0d407c4bdeafab1e7ce9ef3a0b78dcff7ee6096bc4b1c5396d6fff62436f",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_0_2/final.safetensors": "a7a7bd6cca647590f2f24b8b9735acfd73e724ec4060664ebd69cf57ee69a5fe",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_0_2/complete.json": "a3af0d407c4bdeafab1e7ce9ef3a0b78dcff7ee6096bc4b1c5396d6fff62436f",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_0_3/scores.npz": "6dee8eb9d9d49b25cf2f8ca55b50605b8d71ab9d1484a93ce4b8b8aa84d37b1c",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_0_3/scores.json": "19201e8e69b64e832d934315d1eeedf15b8cfdd8593e3aea481f641a7caff4c2",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_0_3/final.safetensors": "8f8724a7c8f4e0b73e97770ab809518a072fca06a3f6ed620817cd291bc9e1d9",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_0_3/complete.json": "19201e8e69b64e832d934315d1eeedf15b8cfdd8593e3aea481f641a7caff4c2",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_0_4/scores.npz": "33597c452319d98ae333fe24689013ad285fff609110373f54caecc2299d323b",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_0_4/scores.json": "dfd6ee0308b1e2ae929f855d96ae082107cab26966ab33223a78425b5e374566",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_0_4/final.safetensors": "82a7ec6dfed99c208c7f0c851ead31db594a3e3a7f9243769a29e207a61e8d1c",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_0_4/complete.json": "dfd6ee0308b1e2ae929f855d96ae082107cab26966ab33223a78425b5e374566",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_1_2/scores.npz": "e61a288f562d6ffb1f64325c026f148ee8ed88eb82fcd71f1278420264b0b6c4",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_1_2/scores.json": "05ea8ab685ddf9602156844297bdc6f975fab444a93ea8704009a8e478f74ac3",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_1_2/final.safetensors": "1d660fceff41db38e3fa9946b360e60cf6d87193533a4411c5219b40e5e8cb60",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_1_2/complete.json": "05ea8ab685ddf9602156844297bdc6f975fab444a93ea8704009a8e478f74ac3",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_1_3/scores.npz": "9a740d64a5a037172215b1c0214244faaa181adf0218e6794c8ad8adbd4529ec",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_1_3/scores.json": "10d531aacc96b053f6ad03b068cea06910a28010e2e2108981a5002dce8cc62b",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_1_3/final.safetensors": "a38ad4bd9e7670bd0f17f7566bd4be4c143ca42cb82409cee46c223d31e760d2",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_1_3/complete.json": "10d531aacc96b053f6ad03b068cea06910a28010e2e2108981a5002dce8cc62b",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_1_4/scores.npz": "86c639fe77845583246f60060ab943733f2f4f887425bb7a86abc5f537a32cdd",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_1_4/scores.json": "7290630088cb715f72f29417be0c30dfa6b61af65c8ce1b2234beaa163ba8bd6",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_1_4/final.safetensors": "7103fd6bdf949a392f277de7767cd8868035110fbb2901a77aa989531eafbbec",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_1_4/complete.json": "7290630088cb715f72f29417be0c30dfa6b61af65c8ce1b2234beaa163ba8bd6",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_2_3/scores.npz": "846f249be802439bee59086be2d284bd34aa7223e51e003539da7e7baf62ea62",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_2_3/scores.json": "85befbdc3ecedb3788bc18f41c1939e7d1283734060081030145d20c706fd418",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_2_3/final.safetensors": "90a811ac7971bb30846795e294f7a16cbbc1020268d0c86502f7abdaa8c3f9b4",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_2_3/complete.json": "85befbdc3ecedb3788bc18f41c1939e7d1283734060081030145d20c706fd418",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_2_4/scores.npz": "54e826dcddf7a56b636ae2040ced7aff2d63aea1a90daade6a1a2a93e51624ec",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_2_4/scores.json": "8edee46c02ed72bc52a7ca2c081e6675424c79749f8d013d80bcfb1ec809df0c",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_2_4/final.safetensors": "e3a9d49356de1753732a0d4a917afaf3c89d7f6d7bfc34c4d34961388ed500b9",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_2_4/complete.json": "8edee46c02ed72bc52a7ca2c081e6675424c79749f8d013d80bcfb1ec809df0c",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_3_4/scores.npz": "f1366812554ea42b3ff863131820325c9f526d44b64f981703ffad9f88b92461",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_3_4/scores.json": "c3320cf459eb824469d9956de36f7f4fb9baddd3a4d2b81b4bf377790b3609df",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_3_4/final.safetensors": "c6def32ca47998b748dfef126998c8260afe4c3d5a4a565fa70deedf6cdb4524",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_3_4/complete.json": "c3320cf459eb824469d9956de36f7f4fb9baddd3a4d2b81b4bf377790b3609df",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_0/scores.npz": "2d18394cac5079f7449f4e63f8114debf91ffd3f2209d9628c4410168515fdb4",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_0/scores.json": "c6b59a4c768391d642997eeee612672eadbc9fec54fb7a3bf42f88d9883422a3",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_0/final.safetensors": "b84f500d3337edf973c07393476ce8c778db02ed694c1a1bb20a540c1e03aed3",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_0/complete.json": "c6b59a4c768391d642997eeee612672eadbc9fec54fb7a3bf42f88d9883422a3",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_1/scores.npz": "06b43ff69a54396899ffc926f04e38527521af379c0f3b43a3f64ad2b88f9f38",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_1/scores.json": "fba7c6581ed86fc8d4dc1c4d19b0748dc543a32bdb7edaf0ccce3dbd747e546c",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_1/final.safetensors": "d06d604ff1a5273d2969dee9cb9557478435bcf92ab06133d87c4398adcad8f1",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_1/complete.json": "fba7c6581ed86fc8d4dc1c4d19b0748dc543a32bdb7edaf0ccce3dbd747e546c",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_2/scores.npz": "a5a99eb634b98600157ef2861550f0bc09154a28128ba33352a62c8ce3ef9053",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_2/scores.json": "97a703a1848cd55427a960e790986a8fd2be6f064a41643ceb873fa0c3957848",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_2/final.safetensors": "f0d34e45566b755db3b4c96ea5fadd878809c4896d943217ad083965e037b8a2",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_2/complete.json": "97a703a1848cd55427a960e790986a8fd2be6f064a41643ceb873fa0c3957848",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_3/scores.npz": "a886f07e971aaece62c770446357583b3637930f6a497ad5751d7ed2096451f6",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_3/scores.json": "174e2f9bb16e00c0bbdde91bde670a3a73cdb6e82814c4fd6cd66f8382ca9cae",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_3/final.safetensors": "71dfb77e4106737ec52c881aaed08f50a234ad03f3db713d70cc1ef24b7cdf97",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_3/complete.json": "174e2f9bb16e00c0bbdde91bde670a3a73cdb6e82814c4fd6cd66f8382ca9cae",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_4/scores.npz": "1fca033a252e0a908fd78f6027abf0a49f35bcb7a6432d93184071c5dee4f8dc",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_4/scores.json": "a964cb8aef5a79b5320b69e2bcc76ba153581706ac6a0f37c1c52f17b0b8f4d5",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_4/final.safetensors": "5976697f882849a351b39a466f19cca2fd1f528628f5743359d86f38fe28ca22",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_4/complete.json": "a964cb8aef5a79b5320b69e2bcc76ba153581706ac6a0f37c1c52f17b0b8f4d5",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_0_1/scores.npz": "1277e68398025875e55484ffb1d0cbefd43bab5aa8a2da58d250a1cfb2491e61",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_0_1/scores.json": "5f0c83379e49aaa2eba6d2d240328cd3b7d6d2122c66759604def695dc723b72",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_0_1/final.safetensors": "842b17dde7bb831d07c623ebcb048d2471d715032bbad89488dfda55ee611401",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_0_1/complete.json": "5f0c83379e49aaa2eba6d2d240328cd3b7d6d2122c66759604def695dc723b72",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_0_2/scores.npz": "b79f9a59a464a557ab2f94d3f2c6919f7e2086d80de4f6f296026b75de773981",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_0_2/scores.json": "e974970091b90652ff9a4e345a1e6d090c675d4023981928cb313543b60f8982",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_0_2/final.safetensors": "3987107bdb1bf4bf0d393090a594d170745d48d05bd55000bd3e4ddb2f96bb40",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_0_2/complete.json": "e974970091b90652ff9a4e345a1e6d090c675d4023981928cb313543b60f8982",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_0_3/scores.npz": "e9df8db8384f22069bafdc6b4c3e9c09ffb50d0d44c8b9990f8bc936a79b0568",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_0_3/scores.json": "0cf5b5c189c481083a34d021e2c274588d83636b5b7e78f7b8d2b68bb4e24145",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_0_3/final.safetensors": "98aaa3947f6399c74d5438596867f2bb4f372511d7341bbbaae5b091cdbfc4f0",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_0_3/complete.json": "0cf5b5c189c481083a34d021e2c274588d83636b5b7e78f7b8d2b68bb4e24145",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_0_4/scores.npz": "f5e4fe1554420334fc3cb080fd0947c99b3faa0437fc397c2f3f72a6054aadd7",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_0_4/scores.json": "f99fe99ff1f1cc6d48f6d4edb8271c4aa937bb7b3e4770c46180bf52156a5e0c",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_0_4/final.safetensors": "a27b063c01a69f54e7b0c8fa731b1dbc7721c156da3c988dafcb420c53bb4f5c",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_0_4/complete.json": "f99fe99ff1f1cc6d48f6d4edb8271c4aa937bb7b3e4770c46180bf52156a5e0c",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_1_2/scores.npz": "721744edaa262fc6c6c0c22b21345374656eb473d2aebbaaceaf841f380242b3",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_1_2/scores.json": "4eee6dc16c9bc12b41a3b297484df15ed1f0b77508de321a47769d8704ee085f",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_1_2/final.safetensors": "9b4f7235607056659bc91d07720df45ab5bed220feff194f75191922166c40a9",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_1_2/complete.json": "4eee6dc16c9bc12b41a3b297484df15ed1f0b77508de321a47769d8704ee085f",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_1_3/scores.npz": "719a1eabab0eb2e257388e1a3709cc7b20a2559a244970b2de35c7c6978e0949",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_1_3/scores.json": "6ae390f3e6c7a55d2c27d18b695c195ccf0fb03d0b6c331a5b6097b46b1f7730",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_1_3/final.safetensors": "e9aa8848ffdf2d6f66d118e96f1f1f3d0403c4b0891256436488331b650d7168",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_1_3/complete.json": "6ae390f3e6c7a55d2c27d18b695c195ccf0fb03d0b6c331a5b6097b46b1f7730",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_1_4/scores.npz": "31f61778ce626e11eb26092c69a06f0954f7f96419174f2b4813db92826fab64",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_1_4/scores.json": "5a58996df4a25c686c4eeb7ba52b928dc82bc01824c109d2d760bcf643ea012a",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_1_4/final.safetensors": "b08354a085ed39d92435e3be5899e004fadef8970519f1122c96b5fe6ee07e1f",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_1_4/complete.json": "5a58996df4a25c686c4eeb7ba52b928dc82bc01824c109d2d760bcf643ea012a",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_2_3/scores.npz": "06accf0aca41aee16027f901ac28c1082671931064dbf78cbaf286bd6bcbd5b4",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_2_3/scores.json": "28e76769e9e33763aa2a9fc9715b8c97d4a3752326460fd81fe06bb27f377fea",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_2_3/final.safetensors": "8434364610127d2f812fa10fd0f363ef60019dc7dafc52e213e4dd902834731f",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_2_3/complete.json": "28e76769e9e33763aa2a9fc9715b8c97d4a3752326460fd81fe06bb27f377fea",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_2_4/scores.npz": "cc7705c2c16cbcfc0257c541acbdf9efd19081489a0bd006859a7756c8183447",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_2_4/scores.json": "d4a70d090978db6f29c491e1966d21a623e8cf6bff15aa0822b06c48f2701670",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_2_4/final.safetensors": "ecc6f75d4d0dc72fe34e4a2c1bbfcd2bb9975ad632873ae3c396c3e47658542e",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_2_4/complete.json": "d4a70d090978db6f29c491e1966d21a623e8cf6bff15aa0822b06c48f2701670",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_3_4/scores.npz": "bd460789d7d340de08a29c43ba42b6aa40c753a72315be9f2b2af19315d9300d",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_3_4/scores.json": "c3df03c8ac971109fe630c4006763354f7a220bb323faecf23fc04e5dbb79445",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_3_4/final.safetensors": "3b2bf058adc7f247ae6592586431b07ae50d30db61f57ae31370b663abfeb5c0",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/exclude_3_4/complete.json": "c3df03c8ac971109fe630c4006763354f7a220bb323faecf23fc04e5dbb79445",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/evidence/eb_models.npz": "af49425cca83e83316a0fadeead381e96325099d591c1fa66d5e1ec8b4720471",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/evidence/sage_bundle.json": "2b7648e1068b4a038b5446601cc73f3bf785a7f3c3b7e2a0a08996213c4621cb",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/evidence/oof_predictions.npz": "9a281833604310dcd9ca705a9694f0cfc6cad9a085d68cea6f59bb0582556dd1",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/scripts/v51_eb.py": "c7a89f33b11e01732b6e848f515855450aef00e5afcc953f3fc42a0e813eac98",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/scripts/v51_expert.py": "f0b29d94c14d6b4e0934b84a8430406d3552ac6bc478212fe7bc02973cdca8aa",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/scripts/v51_common.py": "7e70d5958ab5303457b0a9e8c61d7c3430092cf36faec815d68109a92a4053f3",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/scripts/v51_sage.py": "09e948c35801ffda4db72b4f9c5777c345a7fa533a6ded0f0d7091c7515a59d8",
+    "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/scripts/v51_evaluate.py": "aca3925d78776416e7948009f54e211f88ae8d08f1a92c10375ae9b1bae2b1a5"
+  },
+  "negative_result_action": "do_not_build_or_submit; new API data requires a separate user budget decision"
+}

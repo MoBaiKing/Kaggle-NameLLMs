@@ -1,0 +1,88 @@
+{
+  "recorded_at_utc": "2026-11-14T10:10:40.047614+00:00",
+  "checkout_sha": "667a3034e225727660a3a378c68702f796916b27",
+  "seed": 42,
+  "status": "VALIDATED",
+  "hidden_test_evaluated": false,
+  "native_parity_max_abs": 0.1315519934585916,
+  "native_parity_note": "author fp16 tolerance 0.05; this Ada host 0.1316 with argmax agreement 0.9915/0.9937; pinned public OOF substituted for official rows",
+  "enabled": {
+    "eb": false,
+    "experts": [],
+    "build": false
+  },
+  "eb": {
+    "base": 65.91262739249318,
+    "candidate": 65.5977877206065,
+    "delta": -0.3148396718866686,
+    "ci95": [
+      -0.7703703703703657,
+      0.12592592592592933
+    ],
+    "bootstrap_draws": 4000,
+    "unit": "percentage_points",
+    "metric": "ba"
+  },
+  "groups": {
+    "gemini": {
+      "within_native": 65.55555555555556,
+      "within_expert": 59.333333333333336,
+      "within_delta": -6.222222222222218,
+      "family": {
+        "base": 76.4856776400171,
+        "candidate": 76.61393758016246,
+        "delta": 0.1282599401453588,
+        "ci95": [
+          -0.34543434384162797,
+          0.5972759974887104
+        ],
+        "bootstrap_draws": 4000,
+        "unit": "percentage_points",
+        "metric": "conditional"
+      }
+    },
+    "glm_claude": {
+      "within_native": 50.33407572383074,
+      "within_expert": 40.75723830734967,
+      "within_delta": -9.576837416481077,
+      "family": {
+        "base": 76.4856776400171,
+        "candidate": 76.37997432605906,
+        "delta": -0.10570331395804988,
+        "ci95": [
+          -0.41673836379556545,
+          0.205037385495247
+        ],
+        "bootstrap_draws": 4000,
+        "unit": "percentage_points",
+        "metric": "conditional"
+      }
+    },
+    "gpt_kimi": {
+      "within_native": 69.46666666666667,
+      "within_expert": 62.133333333333326,
+      "within_delta": -7.333333333333336,
+      "family": {
+        "base": 76.4856776400171,
+        "candidate": 76.49828767123287,
+        "delta": 0.012610031215776196,
+        "ci95": [
+          -0.2643982311675619,
+          0.28596648503188493
+        ],
+        "bootstrap_draws": 4000,
+        "unit": "percentage_points",
+        "metric": "conditional"
+      }
+    }
+  },
+  "combined": null,
+  "base_family_conditional": 76.4856776400171,
+  "base_family_accuracy": 86.66172656539459,
+  "metric_scope": "official_train_prompt_OOF_validation_native_alone",
+  "negative_result_action": "do_not_build_or_submit; new API data requires a separate user budget decision",
+  "artifacts_count": 190,
+  "build_executed": false,
+  "submission_executed": false,
+  "unverified_quarantined": 10838
+}

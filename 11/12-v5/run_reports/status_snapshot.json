@@ -1,35 +1,10 @@
 {
-  "status": "RUNNING",
-  "completed": [],
-  "pending": [],
-  "active": {
-    "gemini": {
-      "pid": 843762,
-      "gpu": "0"
-    },
-    "glm_claude": {
-      "pid": 843763,
-      "gpu": "1"
-    },
-    "gpt_kimi": {
-      "pid": 843764,
-      "gpu": "2"
-    },
-    "eb": {
-      "pid": 843765,
-      "gpu": "3"
-    }
-  },
-  "lease": {
-    "allowed": true,
-    "gpus": [
-      "0",
-      "1",
-      "2",
-      "3"
-    ],
-    "deadline": "2026-11-15T14:00:00+08:00",
-    "end": 1794722400.0
-  },
-  "updated_at": "2026-11-14T07:53:45.433901+00:00"
+  "status": "VALIDATED",
+  "completed": [
+    "gemini",
+    "glm_claude",
+    "gpt_kimi",
+    "eb"
+  ],
+  "hidden_test_evaluated": false
 }
