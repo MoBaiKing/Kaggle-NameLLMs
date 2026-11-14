@@ -1,0 +1,80 @@
+{
+  "recorded_at_utc": "2026-11-14T07:53:50.204574+00:00",
+  "checkout_sha": "667a3034e225727660a3a378c68702f796916b27",
+  "status": {
+    "status": "RUNNING",
+    "completed": [],
+    "pending": [],
+    "active": {
+      "gemini": {
+        "pid": 843762,
+        "gpu": "0"
+      },
+      "glm_claude": {
+        "pid": 843763,
+        "gpu": "1"
+      },
+      "gpt_kimi": {
+        "pid": 843764,
+        "gpu": "2"
+      },
+      "eb": {
+        "pid": 843765,
+        "gpu": "3"
+      }
+    },
+    "lease": {
+      "allowed": true,
+      "gpus": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "deadline": "2026-11-15T14:00:00+08:00",
+      "end": 1794722400.0
+    },
+    "updated_at": "2026-11-14T07:53:45.433901+00:00"
+  },
+  "progress": {
+    "gemini": {
+      "last": {
+        "stage": "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gemini/external",
+        "step": 1301,
+        "total": 1882,
+        "ce": 0.7268508360721171
+      },
+      "stages_seen": [
+        "gemini"
+      ],
+      "logged_steps": 66
+    },
+    "glm_claude": {
+      "last": {
+        "stage": "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/glm_claude/exclude_4",
+        "step": 21,
+        "total": 24,
+        "ce": 0.9218514524400234
+      },
+      "stages_seen": [
+        "glm_claude"
+      ],
+      "logged_steps": 67
+    },
+    "gpt_kimi": {
+      "last": {
+        "stage": "/home/xy/Kaggle-NameLLMs-v51/11/12-v5/runs_v51/experts/gpt_kimi/external",
+        "step": 1241,
+        "total": 2283,
+        "ce": 0.9661578871309757
+      },
+      "stages_seen": [
+        "gpt_kimi"
+      ],
+      "logged_steps": 63
+    },
+    "eb": {
+      "features_json": null
+    }
+  }
+}
